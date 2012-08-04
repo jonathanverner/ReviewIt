@@ -1,5 +1,16 @@
 from django.http import HttpResponseServerError
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
+
+
+class HttpJSONResponse(HttpResponse):
+  def __init__(self, data, add_timestamp = True):
+    import simplejson as json
+    import common.utils as utils
+    if add_timestamp:
+      utils.add_timestamp(data)
+    super(HttpJSONResponse,self).__init__(json.dumps(data),"application/json")
+
 
 class HttpNotImplemented(Exception):    
   pass

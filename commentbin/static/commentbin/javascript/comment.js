@@ -15,10 +15,12 @@ var lastRetrieved;
 var unsavedComments = new Array();
 
 /* The first available ID for a new client-side comment */
-var lastID = 0
+var lastID = -1
 
 /* The current selection when displaying the comment forn */
 var current_selection = {}
+
+var nick = '';
 
 /*
  * Each comment is an object with the following fields:
@@ -106,7 +108,7 @@ function saveComment(comment) {
     start:current_selection.start,
     end:current_selection.end,
     text:$('#comment_field')[0].value,
-    id:lastID++
+    id:lastID--
   };
   hilightComment(comment);
   hilightedComments.push(comment);
@@ -121,11 +123,9 @@ function saveComment(comment) {
       var pos = isHilighted(c);
       /* This should not happen */
       if (pos == -1) return;
-      data.comment = eval(data.comment)[0]
-      hilightedComments[pos].id=data.comment.pk;
-      var comments = new Array();
-      comments.push(data.comment);
-      hilightSerializedComments(comments);
+      unHilightComment(data.clientid);
+      hilightedComments[pos] = deserializeComment(eval(data.comment)[0]);
+      hilightComment(hilightedComments[pos])
     },
     error: function( jqXHR ) { 
       error(jqXHR);
@@ -156,7 +156,7 @@ function retrieveNewComments() {
 
 function clickComment(commentID) {
   var comment = {
-    id:commentID,
+    id:commentID
   }
   var pos = isHilighted(comment);
   /* This should not happen! */
@@ -167,8 +167,9 @@ function clickComment(commentID) {
   showCommentEditForm();
 }
 
-function showCommentEditForm() { 
+function showCommentEditForm() {
   $('#edit_comment_form').modal('show');
+  $('#comment_edit_field')[0].focus();
 }
 
 function hideCommentEditForm() { 
@@ -208,16 +209,22 @@ function editComment() {
 }
 
 function deleteComment() { 
-  var commentID = $('#comment_edit_field')[0].value;
+  var commentID = $('#commentid_edit_field')[0].value;
   var pos = isHilighted({id:commentID})
   /* This should not happen */
   if ( pos == -1 ) return;
+  comment = hilightedComments[pos]
   
   $.ajax({
     url:'comments/'+comment.id,
-    data:hilightedComments[pos],
+    data:comment,
     type:'DELETE',
-    success: function(data) { 
+    success: function(data) {
+      var pos = isHilighted({id:data.deletedID})
+      /* this should not happen */
+      if ( pos == -1 ) return;
+      unHilightComment(data.deletedID)
+      hilightedComments.splice(pos,pos)
     },
     error: function( jqXHR ) { 
       error(jqXHR);
@@ -236,6 +243,7 @@ function showCommentForm() {
     end:charRange.end
   }
   $('#add_comment_form').modal('show');
+  $('#comment_field')[0].focus();
 }
 
 function hideCommentForm() {

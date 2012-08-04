@@ -3,9 +3,16 @@ from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponseRedirect,HttpResponse
 from django import forms
 from django.template import RequestContext,Context,Template
+from django.core import serializers
+from django.core.urlresolvers import reverse as reverseurl
+import simplejson as json
 
-from common.http import HttpNotImplemented,HttpPermissionDenied
+from common.http import HttpNotImplemented,HttpPermissionDenied,HttpJSONResponse
+import common.utils as utils
 from commentbin.models import Snippet,Comment
+import commentbin.auth as auth
+
+
 
 class NewSnippetForm(forms.ModelForm):
   class Meta:
@@ -22,8 +29,7 @@ def index(request):
       snip = form.save()
       snip.user=request.user
       snip.save()
-      from django.core.urlresolvers import reverse
-      return HttpResponseRedirect(reverse('commentbin.views.snippet',args=[snip.id]))
+      return HttpResponseRedirect(reverseurl('commentbin.views.snippet',args=[snip.id]))
   else:
     raise HttpNotImplemented
 
@@ -42,24 +48,26 @@ def snippet(request,snippet_id):
   except Snippet.DoesNotExist:
     raise Http404
   
+  if snip.formatted_html is None:
+    snip.format_code()
+  
   if request.method == 'GET':
     params = {'snippet':snip}
+    utils.add_timestamp(params)
     
     try:
       comments = Comment.objects.filter(snippet = snip)
-      from django.core import serializers
       params['comments'] = serializers.serialize("json",comments,ensure_ascii=False,fields=exportCommentFields);
     except Comment.DoesNotExist:
       pass
-      
-    from pygments import highlight
-    from pygments.lexers import PythonLexer
-    from pygments.formatters import HtmlFormatter
     
-    params['formated_code']=highlight( snip.code, PythonLexer(), HtmlFormatter(linenos=True) )
-    import time
-    params['timestamp'] = int(time.time())
     return render_to_response('snippet.html',params,context_instance=RequestContext(request))
+  elif request.method == 'DELETE':
+    if not auth.allow(request,snip,'delete'):
+      raise HttpPermissionDenied
+    else:
+      snip.delete()
+      return HttpResponseRedirect(reverseurl('commentbin.views.index'))
   else:
     raise HttpNotImplemented
     
@@ -68,44 +76,41 @@ def comments(request,snippet_id):
   try:
     snip = Snippet.objects.get(pk = snippet_id)
   except Snippet.DoesNotExist:
-    raise Http404  
- 
-  from datetime import datetime
-  import time
-  from django.core import serializers
-  import simplejson as json
+    raise Http404
   
   if request.method == 'GET':
-
     try:
+      from datetime import datetime
       created_after = datetime.fromtimestamp(int(float(request.GET["created_after"])))
     except:
       created_after = datetime.fromtimestamp(0)
     
     try:
       comments = Comment.objects.filter(snippet = snip, creation_date__gte = created_after)
-      result = { "timestamp":int(time.time()),
-                 "comments":serializers.serialize("json",comments,ensure_ascii=False,fields=exportCommentFields),
+      result = { "comments":serializers.serialize("json",comments,ensure_ascii=False,fields=exportCommentFields),
                  "status":"Ok" }
     except:
-      result = { "status":"Fail",
-		 "timestamp":int(time.time())}
-    return HttpResponse(json.dumps(result),"application/json")
+      result = { "status":"Fail" }
+      
+    return HttpJSONResponse( result )
+
+  
   elif request.method == 'POST':
-    if not request.user.is_authenticated():
+    if not auth.allow(request,snip,'add_comment'):
       raise HttpPermissionDenied
-    
-    comment = Comment.objects.create( text = str(request.POST["text"]),
+
+    comment = Comment.objects.create( text = unicode(request.POST["text"]),
                                       start = int(request.POST["start"]),
                                       end = int(request.POST["end"]),
+                                      nick = utils.getNick( request ),
                                       user = request.user,
                                       snippet = snip );
     comment.save()
-    result = { "timestamp":int(time.time()),
-               "comment":serializers.serialize("json",[comment],ensure_ascii=False,fields=exportCommentFields),
+    result = { "comment":serializers.serialize("json",[comment],ensure_ascii=False,fields=exportCommentFields),
                "clientid":int(request.POST["id"]),
                "status":"Ok" }
-    return HttpResponse(json.dumps(result),"application/json");
+    return HttpJSONResponse( result )
+  
   else:
     raise HttpNotImplemented
 
@@ -115,31 +120,31 @@ def comment(request,snippet_id,comment_id):
     comment = Comment.objects.get(pk = comment_id, snippet = snip)
   except:
     raise Http404
-  import time
-  from django.core import serializers
-  import simplejson as json
-  from common.utils import coerce_post
+
   if request.method == 'GET':
-    result = { "timestamp":int(time.time()),
-               "comment":serializers.serialize("json",[comment],ensure_ascii=False,fields=exportCommentFields),
+    result = { "comment":serializers.serialize("json",[comment],ensure_ascii=False,fields=exportCommentFields),
                "status":"Ok" }
-    return HttpResponse( json.dumps(result),"application/json")
+    return HttpJSONResponse( result )
+  
   elif request.method == 'PUT':
-    coerce_post(request)
-    if not request.user.is_authenticated() or request.user != comment.user:
+    utils.coerce_post(request)
+    if not auth.allow(request, comment, 'change'):
       raise HttpPermissionDenied
+
     comment.text = request.PUT["text"]
     comment.start = int(request.PUT["start"])
     comment.end = int(request.PUT["end"])
     comment.save()
-    result = { "timestamp":int(time.time()),
-               "comment":serializers.serialize("json",[comment],ensure_ascii=False,fields=exportCommentFields),
+    
+    result = { "comment":serializers.serialize("json",[comment],ensure_ascii=False,fields=exportCommentFields),
                "status":"Ok" }
-    return HttpResponse( json.dumps(result),"application/json")
+    return HttpJSONResponse( result )
+  
   elif request.method == 'DELETE':
-    coerce_post(request)
-    if not request.user.is_authenticated():
+    if not auth.allow(request,comment,'delete'):
       raise HttpPermissionDenied
-    coerce_post(request)
+    comment.delete()
+    return HttpJSONResponse( {'status':'Ok', 'deletedID':comment_id} )
+
   else:
     raise HttpNotImplemented

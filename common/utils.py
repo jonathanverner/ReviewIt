@@ -1,3 +1,19 @@
+def add_timestamp(dictionary):
+  import time
+  dictionary['timestamp'] = int(time.time())
+
+def getNick(request):
+  if request.user.is_authenticated():
+    return None
+  try:
+    nick = unicode(request.POST['nick'])
+    if nick == 'Enter a nickname' or nick == '' or nick == ' ':
+      return None
+    return nick
+  except:
+    return None
+      
+
 def coerce_post(request):
     """
     Django doesn't particularly understand REST.
@@ -33,17 +49,3 @@ def coerce_post(request):
             request.META['REQUEST_METHOD'] = 'PUT'
             
         request.PUT = request.POST
-     elif request.method == "DELETE":
-        if hasattr(request, '_post'):
-            del request._post
-            del request._files
-        
-        try:
-            request.method = "POST"
-            request._load_post_and_files()
-            request.method = "DELETE"
-        except AttributeError:
-            request.META['REQUEST_METHOD'] = 'POST'
-            request._load_post_and_files()
-            request.META['REQUEST_METHOD'] = 'DELETE'
-       request.DELETE = request.POST

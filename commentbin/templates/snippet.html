@@ -60,12 +60,18 @@ Created on {{ snippet.creation_date }}.
 {% endif %}
 
 {% autoescape off %}
-{{ formated_code }}
+{{ snippet.formatted_html }}
 {% endautoescape %}
 
+{% if show_add_comment_form %}
 <div id='add_comment_form' class='modal hide'>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">×</button>
+{% if user.is_authenticated %}
+    <div style='float:right;margin:5px;'> <b>{{ user.username }} </b></div>
+{% else %}
+    <div style='float:right;margin:5px;'><input id='nick' onClick='this.value=""' type='textinput' value='Enter a nickname'/></div>
+{% endif %}    
     <h3>Add a comment</h3>
 </div>
   <div class="modal-body">
@@ -78,22 +84,28 @@ Created on {{ snippet.creation_date }}.
     <a href="javascript:saveComment();" class="btn btn-primary">Comment</a>
   </div>
 </div>
+{% endif %}
 
+{% if show
 <div id='edit_comment_form' class='modal hide'>
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">×</button>
+{% if user.is_authenticated %}
+    <div style='float:right;margin:5px;'> <b>{{ user.username }} </b></div>
+{% else %}
+    <div style='float:right;margin:5px;'><input id='nick' onClick='this.value=""' type='textinput' value='Enter a nickname'/></div>
+{% endif %}
     <h3>Add a comment</h3>
 </div>
   <div class="modal-body">
 <form>
-<textarea id='comment_edit_field' name='comment'></textarea>
+<textarea id='comment_edit_field' style='width:500px;height:200px;' name='comment'></textarea>
 <input type='hidden' value='-1' id='commentid_edit_field' />
 </form>
   </div>
   <div class='modal-footer'>
     <!--<a href="#" class="btn" data-dismiss="modal">Close</a>-->
+    <a href="javascript:deleteComment();" class="btn">Delete Comment</a>
     <a href="javascript:editComment();" class="btn btn-primary">Save</a>
-    <a href="javascript:deleteComment();" class="btn btn-primary">Delete Comment</a>
   </div>
 </div>
 {% endblock content %}
