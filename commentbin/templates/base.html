@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% block css %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css" />
+    {% endblock %}
+    
+    {% block javascript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    {% endblock %}
+    
+    <title>{% block title %}Commentbin{% endblock %}</title>
+    
+
+<script>
+    {% block globalVars %}
+    {% endblock globalVars %}
+function onReady() {
+    {% block onReady %}
+    {% endblock onReady %}
+}
+jQuery(document).ready(onReady);
+</script>
+
+</head>
+
+<body>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

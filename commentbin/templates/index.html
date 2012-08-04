@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% include "new_snippet_form.html" %}
+{% if latest_snippets_list|length > 0 %}
+  <ul>
+  {% for snippet in latest_snippets_list %}
+      <li><a href='{% url commentbin.views.snippet snippet.id %}'>
+        {% if snippet.title|length > 0 %} {{ snippet.title }} {% else %} {{ snippet.id }} {% endif %}
+      </a></li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p> No snippets available. </p>
+{% endif %}
+
+{% endblock content %}

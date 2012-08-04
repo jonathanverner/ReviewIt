@@ -1,0 +1,23 @@
+<h1> New Snippet </h1>
+<form action="{% url commentbin.views.index %}" method='POST'>
+{{ form.non_field_errors }}
+<div>
+  {{ form.title.errors }}
+  <label for='id_title'><b>Title:</b></label>
+  {{ form.title }}
+  {{ form.user_email.errors }}
+  {% if user.is_authenticated %}
+    {{ user.username }}
+  {% else %}
+    <label for='id_email'>Email:</label>
+    {{ form.user_email }}
+    <input type="submit" value="Submit" />
+  {% endif %}
+</div>
+<div class='fieldWrapper'>
+{{ form.email.errors }}
+<label for='id_code'><h1>Code:</h1></label>
+{{ form.code }}
+</div>
+<input type="submit" value="Submit" />
+</form>
