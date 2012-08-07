@@ -1,23 +1,38 @@
-<h1> New Snippet </h1>
+<div id='new_snippet_form'>
 <form action="{% url commentbin.views.index %}" method='POST'>
 {{ form.non_field_errors }}
 <div>
-  {{ form.title.errors }}
-  <label for='id_title'><b>Title:</b></label>
+
+<div class='formheader'>  
+  <div style='float:left;'>
   {{ form.title }}
-  {{ form.user_email.errors }}
+  </div>
+
+  <div style='float:right'>
   {% if user.is_authenticated %}
     {{ user.username }}
   {% else %}
-    <label for='id_email'>Email:</label>
-    {{ form.user_email }}
-    <input type="submit" value="Submit" />
+    {{ form.nick }}
   {% endif %}
+  </div>
+  <div style='clear:both;'></div>
 </div>
+
+<div class='formbody'>
+  {{ form.title.errors }}
+  {{ form.nick.errors }}
+
+
 <div class='fieldWrapper'>
-{{ form.email.errors }}
-<label for='id_code'><h1>Code:</h1></label>
 {{ form.code }}
 </div>
-<input type="submit" value="Submit" />
+ <label for='id_public_token'>Password: </label> {{ form.access_token }}
+ <span class='lower'>{{ form.public_comments }}</span> <label for='id_public_comments'>Allow anyone to comment</label>
+ <span class='lower'>{{ form.visible_to_public }}</span><label for='id_visible_to_public'>Public</label>
+
+<div style='float:right'><input type="submit" value="Submit" /></div>
+</div>
 </form>
+
+</div>
+</div> <!-- new_snippet_form -->

@@ -1,18 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 {% include "new_snippet_form.html" %}
+<div id='latest_snippets'>
+<h1 class='rightHeader'>Latest Snippets</h1>
 {% if latest_snippets_list|length > 0 %}
-  <ul>
+
   {% for snippet in latest_snippets_list %}
-      <li><a href='{% url commentbin.views.snippet snippet.id %}'>
-        {% if snippet.title|length > 0 %} {{ snippet.title }} {% else %} {{ snippet.id }} {% endif %}
-      </a></li>
+  <div class='snippet'>
+      <a href='{% url commentbin.views.snippet snippet.id %}'>
+        <h2>{% if snippet.title|length > 0 %} {{ snippet.title }} {% else %} Snippet #{{ snippet.id }} {% endif %}</h2>
+      </a>  
+       by <span class='nick'> {{ snippet.display_author }}</span> <span class='date'>(created at {{ snippet.creation_date|date:"SHORT_DATETIME_FORMAT" }})</span>
+      </a>
+  </div>
   {% endfor %}
-  </ul>
 {% else %}
   <p> No snippets available. </p>
 {% endif %}
+</div>
+
+<div>
+
+
+</div>
+
 
 {% endblock content %}

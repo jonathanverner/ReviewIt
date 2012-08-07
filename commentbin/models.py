@@ -23,6 +23,14 @@ class Snippet(models.Model):
     
     self.formatted_html = highlight( self.code, PythonLexer(), HtmlFormatter(linenos=True) )
   
+  def display_author(self):
+    if self.user is not None:
+      return self.user.username
+    elif self.nick is not None:
+      return self.nick
+    else:
+      return "anonymous"
+    
   def __unicode__(self):
     return "Snippet #"+str(self.id)+":"+self.title;
   

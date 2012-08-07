@@ -23,9 +23,168 @@ function onReady() {
 jQuery(document).ready(onReady);
 </script>
 
+<style>
+#header {
+  background-color:black;
+  padding:10px;
+  background-color:#2E3436;
+  background-image:url('{{ STATIC_URL }}/images/header-back.png');
+  background-repeat:repeat-x;
+  /*background-repeat-y:no-repeat;*/
+  background-attachment:initial;
+  background-position-x:50%;
+  background-clip:initial;
+  
+/*  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px; */
+  -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color:white;
+  
+}
+
+#header h1 {
+  color:orange;
+  padding:0px;
+  margin:0px;
+  font-size:20pt;
+}
+
+#header a {
+  color:gray;
+  text-decoration:none;
+}
+
+#header a:hover {
+  color:white;
+}
+
+#content {
+  margin-left:10px;
+  margin-right:10px;
+}
+
+#latest_snippets {
+  position:absolute;
+  left:55%;
+  top:80px;
+  width:40%%;
+}
+
+.snippet a {
+  text-decoration:none;
+}
+
+.snippet h2 {
+  font-size:12pt;
+  font-weight:bold;
+  color:gray;
+}
+
+.snippet span.date {
+  color:#D1D1D1;
+}
+
+
+
+
+#new_snippet_form {
+  border: 1px solid #D1D1D1;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  width:50%;
+  margin-top:20px;
+}
+
+#new_snippet_form label {
+  color:gray;
+  padding-right:3px;
+  padding-left:3px;
+  width:auto;
+  float:none;
+}
+
+#new_snippet_form fieldset {
+  margin-top:5px;
+  margin-bottom:5px;
+  border-top:1px solid gray;
+  border-bottom:1px solid gray;
+  padding:10px;
+}
+
+div.fieldWrapper {
+  margin-right:10px;
+  margin-bottom:10px;
+}
+
+#new_snippet_form textarea {
+  width:100%;
+  clear:none;
+}
+
+.formheader input {
+  background:#D1D1D1;
+  box-shadow:none;
+  border:#D1D1D1;
+}
+
+#id_title { 
+  font-size:14pt;
+  font-weight:bold;
+}
+
+#id_nick {
+  font-style:italic;
+  width:auto;
+  
+}
+
+
+
+.big {
+  font-size:12pt;
+  font-weight:bold;
+}
+
+div.formheader {
+  background-color:#D1D1D1;
+  padding:10px;
+  margin-bottom:5px;
+}
+
+.formbody {
+  /*clear:both;*/
+  margin:10px;
+}
+
+input.fieldWrapper {
+  background-color:white;
+}
+
+.lower {
+  vertical-align:center;
+}
+
+
+</style>
 </head>
 
 <body>
+<div id="header">
+{% block header %}
+{% if user.is_authenticated %}
+    <div style='float:right;margin:5px;'> Hello, <b>{{ user.username }}! </b> <a href='{% url commentbin.views.logout %}'>Sign Out</a></div>
+{% else %}
+    <div style='float:right;margin:5px;'><a href='{% url commentbin.views.login %}'>Login/Signup</a></div>
+{% endif %}
+<h1><a href='{% url commentbin.views.index %}'>Review</a></h1>
+
+{% endblock header %}
+
+</div>
     <div id="content">
         {% block content %}{% endblock %}
     </div>
