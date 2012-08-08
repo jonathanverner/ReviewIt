@@ -55,7 +55,7 @@ def index(request):
 	request.session['nick'] = snip.nick
 	if not snip.visible_to_public or not snip.public_comments:
 	  append_token='?access_token='+snip.access_token;
-	  request.session['snippet_access_token'] = snip.access_token;
+	request.session['snippet_access_token'] = snip.access_token;
       if snip.title == 'Enter a title...':
 	snip.title = None
       snip.save()
