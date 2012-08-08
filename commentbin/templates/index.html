@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{{ STATIC_URL }}commentbin/codemirror/lib/codemirror.css">
+{% endblock css %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}commentbin/codemirror/lib/codemirror.js"></script>
+    <script src="{{ STATIC_URL }}commentbin/codemirror/mode/python/python.js"></script>
+{% endblock javascript %}
+
 {% block onReady %}
 
   {% autoescape off %}
