@@ -96,6 +96,7 @@ def snippet(request,snippet_id):
     except Comment.DoesNotExist:
       pass
 
+    params['show_delete_link'] = auth.allow(request,snip,'delete')
     params['show_comment_interface'] = auth.allow(request,snip,'add_comment')
     params['nick'] = request.session.get('nick','anonymous');
     
@@ -105,7 +106,9 @@ def snippet(request,snippet_id):
       raise HttpPermissionDenied
     else:
       snip.delete()
-      return HttpResponseRedirect(reverseurl('commentbin.views.index'))
+      result = { "status":"Ok",
+                 "redirect":reverseurl('commentbin.views.index') }
+      return HttpJSONResponse(result)
   else:
     raise HttpNotImplemented
     

@@ -238,6 +238,20 @@ function deleteComment() {
   hideCommentEditForm();
 }
 
+function deleteSnippet() {
+  $.ajax({
+    url:window.location.href,
+    data:{},
+    type:'DELETE',
+    success: function(data) {
+      window.location.replace(data.redirect);
+    },
+    error: function( jqXHR ) { 
+      error(jqXHR);
+    }
+  });
+}
+
 function showCommentForm() {
   var sel = rangy.getSelection();
   var range = sel.getAllRanges()[0];

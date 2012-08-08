@@ -47,6 +47,9 @@
 {% block title %} Snippet {{ snippet.title }} ({{ snippet.id }}) {% endblock %}
 
 {% block content %}
+{% if show_delete_link %}
+<div style='float:right'><a href='javascript:deleteSnippet();'/>Delete Snippet</a></div>
+{% endif %}
 <h1 class='snippet_title'>{{ snippet.title|default:"Snippet" }} (#{{ snippet.id }})</h1>
 Created by <b>{{ snippet.user.username|default:snippet.nick }}</b> on {{ snippet.creation_date }}.
 <div id='error'>
