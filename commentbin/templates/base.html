@@ -4,6 +4,7 @@
 
     {% block css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css" />
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:700|Henny+Penny&amp;text=Reviewit!' rel='stylesheet' type='text/css'>
     {% endblock %}
     
     {% block javascript %}
@@ -168,6 +169,17 @@ input.fieldWrapper {
   vertical-align:center;
 }
 
+.logo_it { 
+  font-family: 'Henny Penny', cursive;
+  color:white;
+  margin-left:4px;
+}
+
+.logo_review { 
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: bold;
+  color:black;
+}
 
 </style>
 </head>
@@ -180,7 +192,7 @@ input.fieldWrapper {
 {% else %}
     <div style='float:right;margin:5px;'><a href='{% url commentbin.views.login %}'>Login/Signup</a></div>
 {% endif %}
-<h1><a href='{% url commentbin.views.index %}'>Review</a></h1>
+<h1><a href='{% url commentbin.views.index %}'><span class='logo_review'>Review</span><span class='logo_it'>it!</span></a></h1>
 
 {% endblock header %}
 
