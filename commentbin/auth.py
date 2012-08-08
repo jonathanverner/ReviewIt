@@ -36,15 +36,22 @@ def allow(request,instance,action):
       
       elif action == 'delete':
 	return False
+    
     elif isinstance(instance,Comment):
         if ('comment_access_token' in request.session and instance.access_token == request.session['comment_access_token']):
 	  return True
+	
 	if action == 'view':
 	  return allow(request, instance.snippet, action)
-	if action == 'view_access_token':
+	
+	elif action == 'view_access_token':
 	  # Since only logged in owners may view the token,
 	  # and they were handled above (request.user == instance.user ...)
 	  # we know that we return False
+	  return False
+	
+	elif action == 'delete':
+	  # Only logged in owners or people with access_tokens may delete
 	  return False
   except:
     pass

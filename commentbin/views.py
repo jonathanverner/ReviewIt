@@ -156,7 +156,6 @@ def comments(request,snippet_id):
                "clientid":int(request.POST["id"]),
                'access_token':request.session['comment_access_token'],
                "status":"Ok" }
-    print request.session['comment_access_token']
     return HttpJSONResponse( result )
   
   else:
@@ -179,7 +178,6 @@ def comment(request,snippet_id,comment_id):
     return HttpJSONResponse( result )
   
   elif request.method == 'PUT':
-    print request.session['comment_access_token']
     utils.coerce_post(request)
     if not auth.allow(request, comment, 'change'):
       raise HttpPermissionDenied
@@ -194,7 +192,6 @@ def comment(request,snippet_id,comment_id):
     return HttpJSONResponse( result )
   
   elif request.method == 'DELETE':
-    print request.session['comment_access_token']
     if not auth.allow(request,comment,'delete'):
       raise HttpPermissionDenied
     comment.delete()
