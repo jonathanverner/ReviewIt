@@ -3,6 +3,28 @@
 <script>
  formElements.push( { id:'id_nick',
                       related:'nick_related' } );
+
+ function setPrivacy(state) { 
+   if (state === 'public') {
+     $('.access_token_field').each( function () { this.style.display='none'; } );
+     $('#id_public_comments')[0].checked='checked';
+     $('#id_visible_to_public')[0].checked='checked';
+   } else if ( state == 'semi_public' ) { 
+     $('.access_token_field').each( function () { this.style.display='none'; } );
+     var pass_field = $('.access_token_field.semi_public')[0];
+     pass_field.style.display='block';
+     pass_field.focus();
+     $('#id_public_comments')[0].checked='';
+     $('#id_visible_to_public')[0].checked='checked';
+   } else if ( state == 'private' ) {
+     $('.access_token_field').each( function () { this.style.display='none'; } );
+     var pass_field = $('.access_token_field.private')[0];
+     pass_field.style.display='block';
+     pass_field.focus();
+     $('#id_public_comments')[0].checked='';
+     $('#id_visible_to_public')[0].checked='';
+   }
+ }
 </script>
 
 <form action="{% url commentbin.views.index %}" method='POST'>
@@ -32,11 +54,23 @@
 <div class='fieldWrapper codeArea'>
 {{ form.code }}
 </div>
- <label for='id_public_token'>Password: </label> {{ form.access_token }}
- <span class='lower'>{{ form.public_comments }}</span> <label for='id_public_comments'>Allow anyone to comment</label>
- <span class='lower'>{{ form.visible_to_public }}</span><label for='id_visible_to_public'>Public</label>
 
-<div style='float:right'><input type="submit" value="Submit" /></div>
+<div style='float:right'><input type="submit" value="New Snippet" /></div>
+</div>
+<div class='privacy_options'>
+ <span class='lower'><input type='radio' name='privacy' id='id_public'      onClick='setPrivacy("public")' checked='checked'  /></span><label for='id_public_comments'> Public (anyone can view, anyone can comment)</a><br/>
+ <span class='lower'><input type='radio' name='privacy' id='id_semi_public' onClick='setPrivacy("semi_public")' /></span><label for='id_public_comments'> Private Commenting (anyone can view, people with password can comment)</a><br/>
+ <div class='access_token_field semi_public' style='display:none'>
+   <label for='id_public_token'>Password: </label> {{ form.access_token }}
+ </div>
+ <span class='lower'><input type='radio' name='privacy' id='id_private'     onClick='setPrivacy("private")'/></span><label for='id_public_comments'> Private (only people with password can view and comment )</a><br/>
+ <div class='access_token_field private' style='display:none'>
+   <label for='id_public_token'>Password: </label> {{ form.access_token }}
+ </div>
+ <div style='display:none'>
+ <span class='lower'>{{ form.public_comments }}</span>
+ <span class='lower'>{{ form.visible_to_public }}</span>
+ </div>
 </div>
 </form>
 
