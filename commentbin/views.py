@@ -41,7 +41,10 @@ def login(request):
   return HttpResponseRedirect(reverseurl('commentbin.views.index'))
   
 def index(request):
-  form = NewSnippetForm(request.POST or None, initial=NewSnippetForm.initial)
+  initial_values = NewSnippetForm.initial
+  initial_values['nick'] = request.session.get('nick','anonymous')
+
+  form = NewSnippetForm(request.POST or None, initial=initial_values)
   if request.method == 'POST':
     if form.is_valid():
       snip = form.save()
@@ -50,6 +53,7 @@ def index(request):
 	forms.user = request.user
       else:
 	snip.user=None
+	request.session['nick'] = snip.nick
 	if not snip.visible_to_public or not snip.public_comments:
 	  append_token='?access_token='+snip.access_token;
 	  request.session['snippet_access_token'] = snip.access_token;
@@ -60,10 +64,12 @@ def index(request):
     raise HttpNotImplemented
 
   snippets = Snippet.objects.filter(visible_to_public=True).order_by('-creation_date')[:10]
-  return render_to_response('index.html',
-                              {'latest_snippets_list':snippets,
-                               'form':form},
-                              context_instance=RequestContext(request))
+  result = {'latest_snippets_list':snippets,
+            'form':form,
+            'nick':request.session.get('nick','anonymous')
+            }
+  utils.add_timestamp(result)
+  return render_to_response('index.html',result,context_instance=RequestContext(request))
 
 
 exportCommentFields = ("text","start","end")
@@ -90,7 +96,7 @@ def snippet(request,snippet_id):
       pass
 
     params['show_comment_interface'] = auth.allow(request,snip,'add_comment')
-
+    params['nick'] = request.session.get('nick','anonymous');
     
     return render_to_response('snippet.html',params,context_instance=RequestContext(request))
   elif request.method == 'DELETE':
@@ -143,6 +149,7 @@ def comments(request,snippet_id):
                                       snippet = snip,
                                       access_token = request.session['comment_access_token']);
     comment.save()
+    request.session['nick'] = utils.getNick( request )
     result = { "comment":serializers.serialize("json",[comment],ensure_ascii=False,fields=exportCommentFields),
                "clientid":int(request.POST["id"]),
                'access_token':request.session['comment_access_token'],
