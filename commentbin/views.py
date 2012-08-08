@@ -42,8 +42,7 @@ def login(request):
   
 def index(request):
   initial_values = NewSnippetForm.initial
-  initial_values['nick'] = request.session.get('nick','anonymous')
-
+  initial_values['nick'] = request.session.get('nick','anonymous') or 'anonymous'
   form = NewSnippetForm(request.POST or None, initial=initial_values)
   if request.method == 'POST':
     if form.is_valid():
@@ -74,7 +73,7 @@ def index(request):
   return render_to_response('index.html',result,context_instance=RequestContext(request))
 
 
-exportCommentFields = ("text","start","end")
+exportCommentFields = ("text","start","end", "user", "nick")
                               
 def snippet(request,snippet_id):
   try:

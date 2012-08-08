@@ -71,7 +71,9 @@ function deserializeComment( jsonSerializedComment ) {
     id:jsonSerializedComment.pk,
     text:jsonSerializedComment.fields.text,
     start:jsonSerializedComment.fields.start,
-    end:jsonSerializedComment.fields.end
+    end:jsonSerializedComment.fields.end,
+    nick:jsonSerializedComment.fields.nick,
+    user:jsonSerializedComment.fields.user,
   };
   return(comment)
 }
@@ -108,6 +110,7 @@ function saveComment(comment) {
     start:current_selection.start,
     end:current_selection.end,
     text:$('#comment_field')[0].value,
+    nick:$('#nick_field')[0].value,
     id:lastID--
   };
   hilightComment(comment);
@@ -164,6 +167,8 @@ function clickComment(commentID) {
   comment = hilightedComments[pos];
   $('#comment_edit_field')[0].value=comment.text;
   $('#commentid_edit_field')[0].value=comment.id;
+  if ( comment.user && ! (comment.user === '') ) $('#comment_edit_nick')[0].innerHTML=comment.user;
+  else $('#comment_edit_nick')[0].innerHTML=comment.nick;
   showCommentEditForm();
 }
 
