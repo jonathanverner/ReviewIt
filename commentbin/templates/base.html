@@ -31,10 +31,9 @@ jQuery(document).ready(onReady);
 
 <style>
 #header {
-  background-color:black;
   padding:10px;
   background-color:#2E3436;
-  background-image:url('{{ STATIC_URL }}/images/header-back.png');
+  background-image:url('{{ STATIC_URL }}commentbin/images/header-back.png');
   background-repeat:repeat-x;
   /*background-repeat-y:no-repeat;*/
   background-attachment:initial;
@@ -174,6 +173,19 @@ input.fieldWrapper {
   vertical-align:center;
 }
 
+.header_nick {
+  color:gray;
+  font-weight:bold;
+  font-size:12pt;
+  display:inline;
+  box-shadow:none;
+  border:#2E3436;
+  width:auto;
+  background: rgba(0, 0, 0, 0);
+  margin-left:3px;
+  margin-right:3px;
+}
+
 .logo_it { 
   font-family: 'Henny Penny', cursive;
   color:white;
@@ -186,6 +198,26 @@ input.fieldWrapper {
   color:black;
 }
 
+.snippet_title {
+ margin-top:10px;
+ margin-left:10px;
+ color:gray;
+}
+
+.privacy_options {
+  margin-left: 3em;
+}
+
+div.access_token_field {
+  margin-left: 2em;
+  margin-top:1em;
+  margin-bottom:1em;
+  width:300px;
+  text-align:right;
+}
+.codeArea {
+  border: 1px solid;
+}
 
 .CodeMirror {
   border: 1px solid #eee;

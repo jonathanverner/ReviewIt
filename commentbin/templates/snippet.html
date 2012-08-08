@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block css %}
     {{ block.super }}
     <link rel="stylesheet" href="{{ STATIC_URL }}commentbin/css/pygments.css" />
@@ -14,6 +15,8 @@
     <script src="{{ STATIC_URL }}commentbin/javascript/rangy-1.3alpha/rangy-core.js"></script>
     <script src="{{ STATIC_URL }}commentbin/javascript/rangy-1.3alpha/rangy-cssclassapplier.js"></script>
     <script src="{{ STATIC_URL }}commentbin/javascript/rangy-1.3alpha/rangy-textrange.js"></script>
+
+
     
     <script src="{{ STATIC_URL }}commentbin/javascript/comment.js"></script>
 {% endblock javascript %}
@@ -25,7 +28,7 @@
 
   initialServerComments = {{ comments }};  
   lastRetrieved = "{{ timestamp }}";
-
+  
   {% endautoescape %}
 {% endblock globalVars %}
 
@@ -34,7 +37,7 @@
   {{ block.super }}
   
   commentInit();
-
+  
 {% endblock onReady %}
 
 
@@ -44,9 +47,8 @@
 {% block title %} Snippet {{ snippet.title }} ({{ snippet.id }}) {% endblock %}
 
 {% block content %}
-<h1>{{ snippet.title }} ({{ snippet.id }})</h1>
-<h2>{{ snippet.user_email }} </h2>
-Created on {{ snippet.creation_date }}.
+<h1 class='snippet_title'>{{ snippet.title }} ({{ snippet.id }})</h1>
+Created by <b>{{ snippet.user.username|default:snippet.nick }}</b> on {{ snippet.creation_date }}.
 <div id='error'>
 </div>
 
