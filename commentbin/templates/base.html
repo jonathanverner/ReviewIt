@@ -9,6 +9,7 @@
     
     {% block javascript %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}commentbin/javascript/forms.js"></script>
     {% endblock %}
     
     <title>{% block title %}Commentbin{% endblock %}</title>
@@ -16,6 +17,10 @@
 
 <script>
     {% block globalVars %}
+    
+    formElements.push( { id:'header_nick',
+                         related:'nick_related' } );
+    
     {% endblock globalVars %}
 function onReady() {
     {% block onReady %}
@@ -190,7 +195,9 @@ input.fieldWrapper {
 {% if user.is_authenticated %}
     <div style='float:right;margin:5px;'> Hello, <b>{{ user.username }}! </b> <a href='{% url commentbin.views.logout %}'>Sign Out</a></div>
 {% else %}
-    <div style='float:right;margin:5px;'><a href='{% url commentbin.views.login %}'>Login/Signup</a></div>
+    <div style='float:right;margin:5px;'> 
+       Hello, <form class='header_nick'><input id='header_nick' class='header_nick nick_related' type='textinput' size={{ nick|length }} onClick='javascript:textInputClick(this);' onBlur='javascript:textInputLeave(this);' value='{{ nick|default:"anonymous" }}'/></form> 
+       <a href='{% url commentbin.views.login %}'>Login/Signup</a></div>
 {% endif %}
 <h1><a href='{% url commentbin.views.index %}'><span class='logo_review'>Review</span><span class='logo_it'>it!</span></a></h1>
 

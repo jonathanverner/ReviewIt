@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 
+{% block onReady %}
+
+  {% autoescape off %}
+
+  {{ block.super }}
+
+  var myCodeMirror = CodeMirror.fromTextArea($('#id_code')[0],{
+      lineNumbers:true
+  });
+  
+  {% endautoescape %}
+{% endblock onReady %}
+
 {% block content %}
 {% include "new_snippet_form.html" %}
 <div id='latest_snippets'>

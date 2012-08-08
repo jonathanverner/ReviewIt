@@ -1,4 +1,10 @@
 <div id='new_snippet_form'>
+
+<script>
+ formElements.push( { id:'id_nick',
+                      related:'nick_related' } );
+</script>
+
 <form action="{% url commentbin.views.index %}" method='POST'>
 {{ form.non_field_errors }}
 <div>
