@@ -1,0 +1,118 @@
+.snippet_title {
+ margin-top:10px;
+ margin-left:10px;
+ color:gray;
+}
+
+.privacy_options {
+  margin-left: 3em;
+}
+
+div.access_token_field {
+  margin-left: 2em;
+  margin-top:1em;
+  margin-bottom:1em;
+  width:300px;
+  text-align:right;
+}
+
+.CodeMirror {
+  border: 1px solid #eee;
+}
+.CodeMirror-scroll {
+ height: auto;
+ overflow-y: hidden;
+ overflow-x: auto;
+}
+
+#latest_snippets {
+  position:absolute;
+  left:55%;
+  top:80px;
+  width:40%%;
+}
+
+.snippet a {
+  text-decoration:none;
+}
+
+.snippet h2 {
+  font-size:12pt;
+  font-weight:bold;
+  color:gray;
+}
+
+.snippet span.date {
+  color:#D1D1D1;
+}
+
+#new_snippet_form {
+  border: 1px solid #D1D1D1;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  width:50%;
+  margin-top:20px;
+}
+
+#new_snippet_form label {
+  color:gray;
+  padding-right:3px;
+  padding-left:3px;
+  width:auto;
+  float:none;
+}
+
+#new_snippet_form fieldset {
+  margin-top:5px;
+  margin-bottom:5px;
+  border-top:1px solid gray;
+  border-bottom:1px solid gray;
+  padding:10px;
+}
+
+div.fieldWrapper {
+  margin-right:10px;
+  margin-bottom:10px;
+}
+
+#new_snippet_form textarea {
+  width:100%;
+  clear:none;
+}
+
+.formheader input {
+  background:#D1D1D1;
+  box-shadow:none;
+  border:#D1D1D1;
+}
+
+#id_title { 
+  font-size:14pt;
+  font-weight:bold;
+}
+
+#id_nick {
+  font-style:italic;
+  width:auto;
+  
+}
+
+div.formheader {
+  background-color:#D1D1D1;
+  padding:10px;
+  margin-bottom:5px;
+}
+
+.formbody {
+  /*clear:both;*/
+  margin:10px;
+}
+
+input.fieldWrapper {
+  background-color:white;
+}
+
+.lower {
+  vertical-align:center;
+}

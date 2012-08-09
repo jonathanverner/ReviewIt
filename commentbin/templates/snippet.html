@@ -60,18 +60,24 @@ Created by <b>{{ snippet.user.username|default:snippet.nick }}</b> on {{ snippet
 <div id='error'>
 </div>
 
+<div class='content'>
+
+<div class='code'>
+{% autoescape off %}
+{{ snippet.formatted_html }}
+{% endautoescape %}
+</div> <!-- code -->
+
+<div class='maincomment'>
 {% if main_comment %}
-<div class='main_comment'>
 <div class='author'>
 <a href='mailto:{{ main_comment.email }}'>{{ main_comment.user_email }} </a>
 </div>
 {{ main_comment.text }}
-</div>
 {% endif %}
+</div> <!-- maincomment -->
 
-{% autoescape off %}
-{{ snippet.formatted_html }}
-{% endautoescape %}
+</div> <!-- content -->
 
 
 {% if show_comment_interface %}
