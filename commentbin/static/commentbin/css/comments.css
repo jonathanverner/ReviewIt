@@ -1,3 +1,13 @@
 .hilight {
   background-color:yellow;
 }
+
+div.comment_controls {
+  margin-right:20px;
+  float:right;
+}
+
+.comment_controls .icon {
+  width:20px;
+  margin:5px;
+}

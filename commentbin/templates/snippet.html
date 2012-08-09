@@ -47,10 +47,15 @@
 {% block title %} Snippet {{ snippet.title }} ({{ snippet.id }}) {% endblock %}
 
 {% block content %}
-{% if show_delete_link %}
-<div style='float:right'><a href='javascript:deleteSnippet();'/>Delete Snippet</a></div>
-{% endif %}
 <h1 class='snippet_title'>{{ snippet.title|default:"Snippet" }} (#{{ snippet.id }})</h1>
+<div class='comment_controls'>
+{% if show_comment_interface %}
+<a href='javascript:showCommentForm();'><img class='icon' src='{{ STATIC_URL }}commentbin/images/comment.png' alt='Add a comment'/></a>
+{% endif %}
+{% if show_delete_link %}
+<a href='javascript:deleteSnippet();'/><img class='icon' src='{{ STATIC_URL }}commentbin/images/delete.png' alt='Delete Snippet'/></a>
+{% endif %}
+</div>
 Created by <b>{{ snippet.user.username|default:snippet.nick }}</b> on {{ snippet.creation_date }}.
 <div id='error'>
 </div>
