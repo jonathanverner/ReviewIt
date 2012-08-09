@@ -26,7 +26,7 @@
 #header {
   padding:10px;
   background-color:#2E3436;
-  background-image:url('{{ STATIC_URL }}commentbin/images/header-back.png');
+  background-image:url('../images/header-back.png');
   background-repeat:repeat-x;
   /*background-repeat-y:no-repeat;*/
   background-attachment:initial;
