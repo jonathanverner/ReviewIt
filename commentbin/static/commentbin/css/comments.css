@@ -8,10 +8,16 @@ div.comment_controls {
 }
 
 .comment_controls .icon {
-  width:20px;
   margin:5px;
 }
 
+
+td.collapse-handle {
+  margin:0px;
+  padding-left:0px;
+  padding-right:0px;
+  width:auto;
+}
 
 .content {
   margin-top:10px;

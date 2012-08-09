@@ -270,10 +270,40 @@ function hideCommentForm() {
   $('#comment_field')[0].value='';
 }
 
+var collapsed = false;
+var collapse_handle = document.createElement('img');
+
 function commentInit() { 
   rangy.init();
   cssClassApplierModule = rangy.modules.CssClassApplier;
   hilightSerializedComments( initialServerComments );
   $(document).bind('keyup','alt+ctrl+m',showCommentForm);
   setInterval(retrieveNewComments,10000);
+  
+  // Add collapse control to the code block
+  var td = document.createElement('td');
+  var a = document.createElement('a');
+  a.href = 'javascript:toggleMainComment();';
+  a.appendChild(collapse_handle);
+  td.appendChild(a);
+  $(td).addClass('collapse-handle');
+  collapse_handle.src=static_url+'commentbin/images/play.png';
+  $(collapse_handle).addClass('collapse_handle');
+  $(collapse_handle).addClass('icon');
+  $('.highlighttable').find('tr')[0].appendChild(td);
+}
+
+
+function toggleMainComment() {
+  if ( collapsed ) {
+    $('div.code')[0].style.width='50%';
+    $('.maincomment')[0].style.display='block';
+    $(collapse_handle).removeClass('flip-horizontal');
+    collapsed = false;
+  } else {
+    $('.maincomment')[0].style.display='none';
+    $('div.code')[0].style.width='auto';
+    $(collapse_handle).addClass('flip-horizontal');
+    collapsed = true;
+  }
 }
