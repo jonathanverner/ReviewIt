@@ -2,6 +2,20 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Snippet(models.Model):
+  PYTHON='py'
+  LATEX='tex'
+  CPP='cpp'
+  C='c'
+  HTML='html'
+  
+  LANGUAGE_CHOICES = (
+    ( PYTHON, 'Python' ),
+    ( LATEX,  'LaTeX' ),
+    ( CPP,    'C++' ),
+    ( C,      'C'),
+    ( HTML,   'HTML'),
+  )
+  
   class Meta:
     ordering = ['creation_date']
 
@@ -15,6 +29,7 @@ class Snippet(models.Model):
   public_comments = models.BooleanField("allow anyone to comment",default = True,help_text='If true, anyone can comment. Otherwise only the owner (if available), admin or the person with an access token can comment.' )
   visible_to_public = models.BooleanField("allow anyone to view",default = True,help_text='If false, the snippet will only be visible to the owner (if available) or anyone with the access token')
   access_token = models.CharField(max_length=100,null=True,blank=True,default=None,help_text='The "master key" to the snippet. Its knowledge allows commenting, deleting and viewing the snippet.')
+  language = models.CharField(max_length=4,choices = LANGUAGE_CHOICES,default=PYTHON)
   
   def format_code(self):
     from pygments import highlight

@@ -11,3 +11,26 @@ div.comment_controls {
   width:20px;
   margin:5px;
 }
+
+
+.content {
+  margin-top:10px;
+  border-top: 1px solid #eee;
+}
+
+div.code {
+  width:50%;
+  border:none;
+}
+
+.code td {
+  border:none;
+}
+
+.maincomment {
+  float:right;
+}
+
+.snippet_title {
+  margin:10px;
+}
