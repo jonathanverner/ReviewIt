@@ -37,13 +37,16 @@ jQuery(document).ready(onReady);
 <body>
 <div id="header">
 {% block header %}
+<div class='header-control'>
+    Hello,
 {% if user.is_authenticated %}
-    <div style='float:right;margin:5px;'> Hello, <b>{{ user.username }}! </b> <a href='{% url commentbin.views.logout %}'>Sign Out</a></div>
+    <b>{{ user.username }}! </b> <a href='{% url commentbin.views.logout %}'>Sign Out</a>
 {% else %}
-    <div style='float:right;margin:5px;'> 
-       Hello, <form class='header_nick'><input id='header_nick' class='header_nick nick_related' type='textinput' size="{{ nick|length }}" onClick='textInputClick(this);' onBlur='textInputLeave(this);' value='{{ nick|default:"anonymous" }}'/></form> 
-       <!--<a href='{% url commentbin.views.login %}'>Login/Signup</a>--></div>
+    <form class='header_nick'><input id='header_nick' class='header_nick nick_related' type='textinput' size="{{ nick|length }}" onClick='textInputClick(this);' onBlur='textInputLeave(this);' value='{{ nick|default:"anonymous" }}'/></form> 
+       <!--<a href='{% url commentbin.views.login %}'>Login/Signup</a>-->
 {% endif %}
+<span id='header-links'>| <a href='{% url commentbin.views.about %}'> About </a>|<a href='{% url commentbin.views.sitehelp %}'> Help </a>|</span>
+</div>
 <h1><a href='{% url commentbin.views.index %}'><span class='logo_review'>Review</span><span class='logo_it'>it!</span></a></h1>
 
 {% endblock header %}

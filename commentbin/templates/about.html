@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{{ STATIC_URL }}commentbin/css/about.css" />
+{% endblock css %}
+
+{% block content %}
+
+<div id='thankyou'>
+<h1> Thank You </h1>
+<ul>
+<li><a href='http://pygments.org'><img src='http://pygments.org/media/logo.png' alt='Pygments'/></a></li>
+<li><a href='http://code.google.com/p/rangy/'>Rangy</a></li>
+<li><a href='http://codemirror.net'><img src='http://codemirror.net/doc/baboon.png' alt='CodeMirror'/></a></li>
+<li><a href='https://www.djangoproject.com/'><img src="https://www.djangoproject.com/m/img/site/hdr_logo.gif" alt="Django"></a></li>
+<li><a href='http://jquery.com'><img src="http://static.jquery.com/files/rocker/images/logo_jquery_215x53.gif" alt="jQuery: Write Less, Do More."></a></li>
+<li><a href='http://blog.twg.ca/2010/11/retina-display-icon-set/'>Retina Icon Set </a></li>
+</ul>
+</div>
+
+<h1> About Review<i>It!</i></h1>
+
+Review<i>It</i> is a 'pastebin'-like site which allows pasting snippets of (currently only) python code.
+Users may attach inline comments to posted snippets. The site also offers three privacy modes for 
+posted snippets:
+<ul>
+<li> Public &mdash; anyone can view and post comments,</li>
+<li> Semi-public &mdash; anyone can view, only people knowing the password may comment and 
+<li> Private &mdash; only people knowing the password may comment.</li>
+</ul>
+<h1> Features </h1>
+<ul>
+<li> Syntaxt hilighting </li>
+<li> Inline comments </li>
+<li> No need for signup/login </li>
+<h2> Planned </h2>
+<li> LaTeX rendering </li>
+<li> PDF export </li>
+</ul>
+<h1> License </h1>
+For the licenses of third-party included code, see the respective projects. All other code, unless otherwise stated,
+is under the <a href='www.gnu.org/licenses/agpl-3.0.html'>GNU Affero General Public License (AGPLv3)</a>.
+
+{% endblock content %}

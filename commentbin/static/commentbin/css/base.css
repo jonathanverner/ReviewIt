@@ -64,6 +64,21 @@
   margin-right:10px;
 }
 
+.header-control {
+  float:right;
+  margin:5px;
+}
+
+.header-links {
+  margin-left:30px;
+}
+
+#header-links a {
+  font-weight:bold;
+  padding:3px;
+  color:orange;
+}
+
 .big {
   font-size:12pt;
   font-weight:bold;

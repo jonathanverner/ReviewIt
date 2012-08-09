@@ -32,14 +32,21 @@ class NewSnippetForm(forms.ModelForm):
   #  self.fields['nick'].widget.attrs['size']=10
 
     
-  
 def logout(request):
   djangoauth.logout(request)
   return HttpResponseRedirect(reverseurl('commentbin.views.index'))
 
 def login(request):
   return HttpResponseRedirect(reverseurl('commentbin.views.index'))
-  
+
+def about(request):
+  result = {'nick':request.session.get('nick','anonymous')}
+  return render_to_response('about.html',result,context_instance=RequestContext(request))
+
+def sitehelp(request):
+  result = {'nick':request.session.get('nick','anonymous')}
+  return render_to_response('sitehelp.html',result,context_instance=RequestContext(request))
+
 def index(request):
   initial_values = NewSnippetForm.initial
   initial_values['nick'] = request.session.get('nick','anonymous') or 'anonymous'
