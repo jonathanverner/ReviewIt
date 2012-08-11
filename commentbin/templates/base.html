@@ -28,6 +28,9 @@
 function onReady() {
     {% block onReady %}
     {% endblock onReady %}
+    $('.alert').addClass('fade')
+    $('.alert').addClass('in')
+    $('.alert').alert();
 }
 jQuery(document).ready(onReady);
 </script>

@@ -138,7 +138,8 @@ function saveComment(comment) {
 }
 
 function error(jqXHR) {
-  $('#error')[0].innerHTML = jqXHR.responseText;
+  $('#error')[0].innerHTML = "<div class='alert alert-error'>"+jqXHR.statusText + " ("+jqXHR.status+") </div>"
+  //$('#error')[0].innerHTML = jqXHR.responseText;
 }
 
 
