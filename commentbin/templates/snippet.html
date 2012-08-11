@@ -54,11 +54,10 @@
 Created by <b>{{ snippet.user.username|default:snippet.nick }}</b> on {{ snippet.creation_date }}.
 <div class='comment_controls'>
 {% if show_comment_interface %}
-<a href='javascript:showCommentForm();'>
-<img class='icon' src='{{ STATIC_URL }}commentbin/images/comment.png' alt='Add a comment'/></a>
+<img rel='tooltip' onClick='showCommentForm()' class='icon mytooltip clickable' title='Add inline comment to the highlited section of the code' src='{{ STATIC_URL }}commentbin/images/comment.png' alt='Add a comment'/>
 {% endif %}
 {% if show_delete_link %}
-<a href='javascript:deleteSnippet();'/><img class='icon' src='{{ STATIC_URL }}commentbin/images/delete.png' alt='Delete Snippet'/></a>
+<img rel='tooltip' onClick='deleteSnippet()' class='icon mytooltip clickable' title='Delete this snippet' src='{{ STATIC_URL }}commentbin/images/delete.png' alt='Delete Snippet'/>
 {% endif %}
 </div>
 

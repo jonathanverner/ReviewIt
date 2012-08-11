@@ -278,6 +278,8 @@ function commentInit() {
   $(document).bind('keyup','alt+ctrl+m',showCommentForm);
   setInterval(retrieveNewComments,10000);
   
+  $('.mytooltip').tooltip();
+  
   // Add collapse control to the code block
   var td = document.createElement('td');
   $('.highlighttable').find('tr')[0].appendChild(td);
