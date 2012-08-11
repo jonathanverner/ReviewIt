@@ -19,10 +19,9 @@ class NewSnippetForm(forms.ModelForm):
   class Meta:
     model = Snippet
     
-  initial = { 'nick':'anonymous', 'title':'Enter a title...', 'code':"\n"*25 }
+  initial = { 'nick':'anonymous', 'title':'Enter a title...', }
   nick = forms.CharField(widget = forms.TextInput(attrs={'size':10, 'class':'nick_related', 'onClick':'javascript:textInputClick(this);', 'onBlur':'javascript:textInputLeave(this);'}))
   title = forms.CharField(widget = forms.TextInput(attrs={'onClick':'this.value=""'}))
-  code = forms.CharField(widget = forms.Textarea(attrs={'rows':25}))
   
     
   #def __init__(self,*args,**kwargs):

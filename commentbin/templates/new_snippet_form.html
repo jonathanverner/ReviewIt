@@ -58,12 +58,12 @@
 <div style='float:right'><input type="submit" class='btn' value="New Snippet" /></div>
 </div>
 <div class='privacy_options'>
- <label for='id_public_comments'> <input type='radio' name='privacy' id='id_public'      onClick='setPrivacy("public")' checked='checked'  /><span>Public (anyone can view, anyone can comment)</span></label>
- <label for='id_public_comments'> <input type='radio' name='privacy' id='id_semi_public' onClick='setPrivacy("semi_public")' />Private Commenting (anyone can view, people with password can comment)</label>
+ <label for='id_public_comments'> <input type='radio' name='privacy' id='id_public'      onClick='setPrivacy("public")' checked='checked'  /><span>Public (anyone can view, anyone can comment)</span></label><br/>
+ <label for='id_public_comments'> <input type='radio' name='privacy' id='id_semi_public' onClick='setPrivacy("semi_public")' />Private Commenting (anyone can view, people with password can comment)</label><br/>
  <div class='access_token_field semi_public' style='display:none'>
    <label for='id_public_token'>Password: {{ form.access_token }}</label> 
  </div>
- <label for='id_public_comments'> <input type='radio' name='privacy' id='id_private'     onClick='setPrivacy("private")'/>Private (only people with password can view and comment )</label>
+ <label for='id_public_comments'> <input type='radio' name='privacy' id='id_private'     onClick='setPrivacy("private")'/>Private (only people with password can view and comment )</label><br/>
  <div class='access_token_field private' style='display:none'>
    <label for='id_public_token'>Password: {{ form.access_token }}</label> 
  </div>
