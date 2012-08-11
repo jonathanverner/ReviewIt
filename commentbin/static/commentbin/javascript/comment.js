@@ -31,7 +31,7 @@ var nick = '';
  *   text	... the actual comment
  */
 
-/* Hilights the respective code and adds a twipsy with the comment text to it */
+/* Hilights the respective code and adds a tooltip with the comment text to it */
 function hilightComment(comment) {
   
   var code_block = $('.code');
@@ -41,7 +41,7 @@ function hilightComment(comment) {
     elementTagName: "a",
     elementProperties: {
       href: 'javascript:clickComment('+comment.id+');',
-      rel:  'twipsy'
+      rel:  'tooltip'
     },
     normalize:true
   };
@@ -50,7 +50,7 @@ function hilightComment(comment) {
   range.selectCharacters(code_block[0],comment.start,comment.end);  
   applier.applyToRange(range);
   $('.'+commentClass).attr('data-original-title',comment.text);
-  $('.'+commentClass).twipsy({
+  $('.'+commentClass).tooltip({
     live: true
   });
   
@@ -60,7 +60,7 @@ function hilightComment(comment) {
 function unHilightComment(commentID) { 
     $('.comment'+commentID).each( function( index ) {
     var annot = $(this).html()
-    $(this).twipsy('hide')
+    $(this).tooltip('hide')
     $(this).after(annot)
     $(this).remove()
   })
@@ -138,7 +138,7 @@ function saveComment(comment) {
 }
 
 function error(jqXHR) {
-  $('#error')[0].innerHTML = "<div class='alert alert-error'>"+jqXHR.statusText + " ("+jqXHR.status+") </div>"
+  $('#error')[0].innerHTML = "<div class='alert alert-error'>"+jqXHR.statusText + " ("+jqXHR.status+") <a class='close' data-dismiss='alert' href='#'>×</a></div>"
   //$('#error')[0].innerHTML = jqXHR.responseText;
 }
 

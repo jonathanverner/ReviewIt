@@ -11,13 +11,13 @@
   margin-right:3px;
 }
 
-.logo_it { 
+.logo-it { 
   font-family: 'Henny Penny', cursive;
   color:white;
   margin-left:4px;
 }
 
-.logo_review { 
+.logo-review { 
   font-family: 'Droid Sans', sans-serif;
   font-weight: bold;
   color:black;
@@ -67,6 +67,7 @@
 .header-control {
   float:right;
   margin:5px;
+  margin-top:10px;
 }
 
 .header-links {
@@ -93,6 +94,19 @@
     filter: fliph; /*IE*/
 }
 
+input[type="radio"] {
+  margin-right:5px;
+  margin-top:0px;
+}
+
+label {
+  margin:0px;
+}
+
 .icon {
   width:20px;
+}
+
+body {
+  padding-top:60px;
 }

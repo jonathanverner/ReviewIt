@@ -27,7 +27,7 @@
  }
 </script>
 
-<form action="{% url commentbin.views.index %}" method='POST'>
+<form action="{% url commentbin.views.index %}" class = 'form-inline new_snippet_form' method='POST'>
 {{ form.non_field_errors }}
 <div>
 
@@ -55,17 +55,17 @@
 {{ form.code }}
 </div>
 
-<div style='float:right'><input type="submit" value="New Snippet" /></div>
+<div style='float:right'><input type="submit" class='btn' value="New Snippet" /></div>
 </div>
 <div class='privacy_options'>
- <span class='lower'><input type='radio' name='privacy' id='id_public'      onClick='setPrivacy("public")' checked='checked'  /></span><label for='id_public_comments'> Public (anyone can view, anyone can comment)</a><br/>
- <span class='lower'><input type='radio' name='privacy' id='id_semi_public' onClick='setPrivacy("semi_public")' /></span><label for='id_public_comments'> Private Commenting (anyone can view, people with password can comment)</a><br/>
+ <label for='id_public_comments'> <input type='radio' name='privacy' id='id_public'      onClick='setPrivacy("public")' checked='checked'  /><span>Public (anyone can view, anyone can comment)</span></label>
+ <label for='id_public_comments'> <input type='radio' name='privacy' id='id_semi_public' onClick='setPrivacy("semi_public")' />Private Commenting (anyone can view, people with password can comment)</label>
  <div class='access_token_field semi_public' style='display:none'>
-   <label for='id_public_token'>Password: </label> {{ form.access_token }}
+   <label for='id_public_token'>Password: {{ form.access_token }}</label> 
  </div>
- <span class='lower'><input type='radio' name='privacy' id='id_private'     onClick='setPrivacy("private")'/></span><label for='id_public_comments'> Private (only people with password can view and comment )</a><br/>
+ <label for='id_public_comments'> <input type='radio' name='privacy' id='id_private'     onClick='setPrivacy("private")'/>Private (only people with password can view and comment )</label>
  <div class='access_token_field private' style='display:none'>
-   <label for='id_public_token'>Password: </label> {{ form.access_token }}
+   <label for='id_public_token'>Password: {{ form.access_token }}</label> 
  </div>
  <div style='display:none'>
  <span class='lower'>{{ form.public_comments }}</span>

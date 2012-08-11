@@ -47,21 +47,22 @@
 {% block title %} Snippet {{ snippet.title }} ({{ snippet.id }}) {% endblock %}
 
 {% block content %}
+<div id='error'>
+</div>
+
 <h1 class='snippet_title'>{{ snippet.title|default:"Snippet" }} (#{{ snippet.id }})</h1>
+Created by <b>{{ snippet.user.username|default:snippet.nick }}</b> on {{ snippet.creation_date }}.
 <div class='comment_controls'>
 {% if show_comment_interface %}
-<a href='javascript:showCommentForm();'><img class='icon' src='{{ STATIC_URL }}commentbin/images/comment.png' alt='Add a comment'/></a>
+<a href='javascript:showCommentForm();'>
+<img class='icon' src='{{ STATIC_URL }}commentbin/images/comment.png' alt='Add a comment'/></a>
 {% endif %}
 {% if show_delete_link %}
 <a href='javascript:deleteSnippet();'/><img class='icon' src='{{ STATIC_URL }}commentbin/images/delete.png' alt='Delete Snippet'/></a>
 {% endif %}
 </div>
-Created by <b>{{ snippet.user.username|default:snippet.nick }}</b> on {{ snippet.creation_date }}.
-<div id='error'>
-</div>
 
 <div class='content'>
-
 <div class='code'>
 {% autoescape off %}
 {{ snippet.formatted_html }}
@@ -114,7 +115,7 @@ formElements.push( { id:'nick_field',
 {% else %}
     <div style='float:right;margin:5px;'><b id='comment_edit_nick'>{{ nick|default:"anonymous" }}</b></div>
 {% endif %}
-    <h3>Add a comment</h3>
+    <h3>Modify a comment</h3>
 </div>
   <div class="modal-body">
 <form>

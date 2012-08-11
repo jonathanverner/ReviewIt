@@ -164,6 +164,7 @@ def comments(request,snippet_id):
     result = { "comment":serializers.serialize("json",[comment],ensure_ascii=False,fields=exportCommentFields),
                "clientid":int(request.POST["id"]),
                'access_token':request.session['comment_access_token'],
+               'can_edit':True,
                "status":"Ok" }
     return HttpJSONResponse( result )
   

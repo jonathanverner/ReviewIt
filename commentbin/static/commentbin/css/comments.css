@@ -16,10 +16,12 @@ td.collapse-handle {
   margin:0px;
   padding-left:0px;
   padding-right:0px;
-  width:auto;
+  width:20px;
+  vertical-align:top;
 }
 
 .content {
+  clear:both;
   margin-top:10px;
   border-top: 1px solid #eee;
 }
@@ -27,8 +29,21 @@ td.collapse-handle {
 div.code {
   width:50%;
   border:none;
+  padding-top:10px;
 }
 
+.linenos {
+  width:3em;
+}
+
+.code td {
+  vertical-align:top;
+}
+
+.alert {
+  margin-top:5px;
+  margin-bottom:5px;
+}
 .code td {
   border:none;
 }

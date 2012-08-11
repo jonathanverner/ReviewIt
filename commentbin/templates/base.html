@@ -4,13 +4,14 @@
 
     {% block css %}
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:700|Henny+Penny&amp;text=Reviewit!' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap-v2/css/bootstrap.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}commentbin/css/base.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css" />
     {% endblock %}
     
     {% block javascript %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="{{ STATIC_URL }}commentbin/javascript/forms.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-v2/js/bootstrap.js"></script>
     {% endblock %}
     
     <title>{% block title %}Commentbin{% endblock %}</title>
@@ -38,7 +39,7 @@ jQuery(document).ready(onReady);
 </head>
 
 <body>
-<div id="header">
+<div id="header" class='navbar navbar-fixed-top'>
 {% block header %}
 <div class='header-control'>
     Hello,
@@ -50,7 +51,7 @@ jQuery(document).ready(onReady);
 {% endif %}
 <span id='header-links'>| <a href='{% url commentbin.views.about %}'> About </a>|<a href='{% url commentbin.views.sitehelp %}'> Help </a>|</span>
 </div>
-<h1><a href='{% url commentbin.views.index %}'><span class='logo_review'>Review</span><span class='logo_it'>it!</span></a></h1>
+<h1><a href='{% url commentbin.views.index %}'><span class='logo-review'>Review</span><span class='logo-it'>it!</span></a></h1>
 
 {% endblock header %}
 
