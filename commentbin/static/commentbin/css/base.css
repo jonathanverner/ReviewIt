@@ -107,6 +107,10 @@ label {
   width:20px;
 }
 
+.clickable {
+  cursor:pointer;
+}
+
 body {
   padding-top:60px;
 }

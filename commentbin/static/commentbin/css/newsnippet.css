@@ -46,12 +46,17 @@ div.access_token_field {
   color:#D1D1D1;
 }
 
+#new_snippet_form_div {
+  width:50%;
+}
+
 #new_snippet_form {
   border: 1px solid #D1D1D1;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   border-radius: 6px;
-  width:50%;
+  width:auto;
+  margin-right:30px;
   margin-top:20px;
 }
 

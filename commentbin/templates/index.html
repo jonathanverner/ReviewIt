@@ -10,6 +10,7 @@
     {{ block.super }}
     <script src="{{ STATIC_URL }}commentbin/codemirror/lib/codemirror.js"></script>
     <script src="{{ STATIC_URL }}commentbin/codemirror/mode/python/python.js"></script>
+    
 {% endblock javascript %}
 
 {% block onReady %}
@@ -22,11 +23,17 @@
       lineNumbers:true
   });
   
+  collapsible( $('#new_snippet_form_div')[0], $('#latest_snippets')[0], $('#new_snippet_collapse_control')[0], '50%');
+  
   {% endautoescape %}
 {% endblock onReady %}
 
 {% block content %}
+<div id='new_snippet_form_div'>
+<div id='new_snippet_collapse_control' style='float:right'>
+</div>
 {% include "new_snippet_form.html" %}
+</div>
 <div id='latest_snippets'>
 <h1 class='rightHeader'>Latest Snippets</h1>
 {% if latest_snippets_list|length > 0 %}
