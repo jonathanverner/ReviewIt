@@ -61,21 +61,47 @@ Created by <b>{{ snippet.user.username|default:snippet.nick }}</b> on {{ snippet
 {% endif %}
 </div>
 
+
 <div class='content'>
+
+<div class='othercomments'>
+<div id='othercommentslist'>
+{% if othercomments %}
+{% for comment in othercomments %}
+
+<blockquote>
+{% autoescape off %}
+{{ comment.text }}
+{% endautoescape %}
+<small class='author'>
+Posted by <b>{{ comment.display_author }} </b> on {{  comment.creation_date }}
+</small>
+</blockquote>
+
+{% endfor %}
+</div>
+
+{{ main_comment.text }}
+{% endif %}
+
+{% if show_comment_interface %}
+<textarea id='other_comment_text_field'>
+</textarea>
+<div style='float:right'>
+<input type='submit' value='Post Comment!' class='btn' onClick='postOtherComment();'/>
+</div>
+{% endif %}
+
+</div> <!-- othercomments -->
+
+
 <div class='code'>
 {% autoescape off %}
 {{ snippet.formatted_html }}
 {% endautoescape %}
 </div> <!-- code -->
 
-<div class='maincomment'>
-{% if main_comment %}
-<div class='author'>
-<a href='mailto:{{ main_comment.email }}'>{{ main_comment.user_email }} </a>
-</div>
-{{ main_comment.text }}
-{% endif %}
-</div> <!-- maincomment -->
+
 
 </div> <!-- content -->
 

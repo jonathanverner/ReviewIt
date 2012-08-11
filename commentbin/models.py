@@ -66,8 +66,10 @@ class Comment(models.Model):
   nick = models.CharField(max_length=30,blank=True)
   user = models.ForeignKey(User,related_name='+',blank=True,null=True,on_delete=models.SET_NULL)
   snippet = models.ForeignKey(Snippet)
+  replyto = models.ForeignKey('self',blank=True,null=True,default=None)
   start = models.IntegerField()
   end = models.IntegerField()
+  inlinecomment = models.BooleanField("Is this an inline comment",default=True)
   access_token = models.CharField(help_text='The "master key" to the comment. Its knowledge allows deleting and modifying the comment.',max_length=100,blank=True,default=None)
   
   def __unicode__(self):

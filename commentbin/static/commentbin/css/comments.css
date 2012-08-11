@@ -48,8 +48,29 @@ div.code {
   border:none;
 }
 
-.maincomment {
+.add_comment_form, .edit_comment_form input {
+  border:none;
+}
+
+.othercomments {
   float:right;
+  width:45%;
+  margin-right:20px;
+  margin-top:10px;
+}
+
+.othercomments blockquote {
+  float:none;
+  width:auto;
+}
+
+.othercomments input {
+  border:none;
+}
+
+.othercomments textarea {
+ width:100%;
+ height:10em;
 }
 
 .snippet_title {

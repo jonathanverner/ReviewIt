@@ -3,9 +3,7 @@ function collapsible( main, sidebar, toggle, width ) {
   var handle = document.createElement('img');
 
   handle.src=static_url+'commentbin/images/play.png';
-  $(handle).addClass('collapse-handle');
-  $(handle).addClass('icon');
-  $(handle).addClass('clickable');
+  $(handle).addClass('collapse-handle icon clickable');
   $(handle).attr('onClick','toggleCollapse(this);');
   handle.title='Collapse the sidebar.';
 

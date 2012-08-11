@@ -105,6 +105,34 @@ function hilightSerializedComments( arrayOfComments ) {
   }
 }
 
+function getOtherCommentTag(comment) { 
+  var block_quote = document.createElement('blockquote');
+  block_quote.innerHTML=comment.text+'<small>Posted by '+comment.nick+' on '+comment.date+'</small>';
+  return block_quote;
+}
+
+function postOtherComment() { 
+  var comment = {
+    start:0,
+    end:0,
+    text:$('#other_comment_text_field')[0].value,
+    nick:$('#header_nick')[0].value,
+    id:lastID--,
+    inlinecomment:false,
+  };
+  $.ajax({
+    url:'comments/',
+    data:comment,
+    type:'POST',
+    success: function(data) {
+      com = getOtherCommentTag( deserializeComment(eval(data.comment)[0]) );
+      $('#othercommentslist')[0].appendChild(com);
+      $('#other_comment_text_field')[0].value='';
+    },
+    error: error
+  });
+}
+
 function saveComment(comment) {
   var comment = {
     start:current_selection.start,
@@ -283,5 +311,5 @@ function commentInit() {
   // Add collapse control to the code block
   var td = document.createElement('td');
   $('.highlighttable').find('tr')[0].appendChild(td);
-  collapsible( $('div.code')[0], $('.maincomment')[0], td, '50%');
+  collapsible( $('div.code')[0], $('.othercomments')[0], td, '50%');
 }

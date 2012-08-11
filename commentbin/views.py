@@ -71,7 +71,7 @@ def index(request):
   return render_to_response('index.html',result,context_instance=RequestContext(request))
 
 
-exportCommentFields = ("text","start","end", "user", "nick")
+exportCommentFields = ("text","start","end", "user", "nick", "inlinecomment","creation_date")
                               
 def snippet(request,snippet_id):
   try:
@@ -89,8 +89,11 @@ def snippet(request,snippet_id):
     utils.add_timestamp(params)
     
     try:
-      comments = Comment.objects.filter(snippet = snip)
-      params['comments'] = serializers.serialize("json",comments,ensure_ascii=False,fields=exportCommentFields);
+      inlinecomments = Comment.objects.filter(snippet = snip,inlinecomment=True)
+      othercomments = Comment.objects.filter(snippet = snip,inlinecomment=False)
+      params['comments'] = serializers.serialize("json",inlinecomments,ensure_ascii=False,fields=exportCommentFields);
+      params['json-othercomments'] = serializers.serialize("json",othercomments,ensure_ascii=False,fields=exportCommentFields);
+      params['othercomments'] = othercomments;
     except Comment.DoesNotExist:
       pass
 
@@ -110,7 +113,6 @@ def snippet(request,snippet_id):
   else:
     raise HttpNotImplemented
     
-
 def comments(request,snippet_id):
   try:
     snip = Snippet.objects.get(pk = snippet_id)
@@ -125,8 +127,11 @@ def comments(request,snippet_id):
       created_after = datetime.fromtimestamp(0)
     
     try:
-      comments = Comment.objects.filter(snippet = snip, creation_date__gte = created_after)
-      result = { "comments":serializers.serialize("json",comments,ensure_ascii=False,fields=exportCommentFields),
+      inlinecomments = Comment.objects.filter(snippet = snip, creation_date__gte = created_after, inlinecomment = True)
+      othercomments = Comment.objects.filter(snippet = snip, creation_date__gte = created_after, inlinecomment = False)
+  
+      result = { "comments":serializers.serialize("json",inlinecomments,ensure_ascii=False,fields=exportCommentFields),
+		 "othercomments":serializers.serialize("json",othercomments,ensure_ascii=False,fields=exportCommentFields),
                  "status":"Ok" }
     except:
       result = { "status":"Fail" }
@@ -150,6 +155,8 @@ def comments(request,snippet_id):
                                       user = u,
                                       snippet = snip,
                                       access_token = request.session['comment_access_token']);
+    if comment.end == 0:
+      comment.inlinecomment = False
     comment.save()
     request.session['nick'] = utils.getNick( request )
     result = { "comment":serializers.serialize("json",[comment],ensure_ascii=False,fields=exportCommentFields),
