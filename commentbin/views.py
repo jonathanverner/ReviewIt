@@ -22,15 +22,7 @@ class NewSnippetForm(forms.ModelForm):
   initial = { 'nick':'anonymous', 'title':'Enter a title...', }
   nick = forms.CharField(widget = forms.TextInput(attrs={'size':10, 'class':'nick_related', 'onClick':'javascript:textInputClick(this);', 'onBlur':'javascript:textInputLeave(this);'}))
   title = forms.CharField(widget = forms.TextInput(attrs={'onClick':'this.value=""'}))
-  
-    
-  #def __init__(self,*args,**kwargs):
-  #  super(NewSnippetForm,self).__init__(args,kwargs)
-  #  self.fields['code'].widget.attrs['rows']=25
-  #  self.fields['code'].widget.attrs['cols']=80
-  #  self.fields['nick'].widget.attrs['size']=10
-
-    
+      
 def logout(request):
   djangoauth.logout(request)
   return HttpResponseRedirect(reverseurl('commentbin.views.index'))
@@ -163,7 +155,6 @@ def comments(request,snippet_id):
     result = { "comment":serializers.serialize("json",[comment],ensure_ascii=False,fields=exportCommentFields),
                "clientid":int(request.POST["id"]),
                'access_token':request.session['comment_access_token'],
-               'can_edit':True,
                "status":"Ok" }
     return HttpJSONResponse( result )
   
