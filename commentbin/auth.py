@@ -23,6 +23,11 @@ def allow(request,instance,action):
       return True
     
     if isinstance(instance,Snippet):
+      # Since we do not own the object and it has 'owner_only_comments' set to True
+      # we cannot add comments
+      if action =='add_comment' and instance.owner_only_comments:
+	return False
+	
       if 'snippet_access_token' in request.session and instance.access_token == request.session['snippet_access_token']:
 	return True
     

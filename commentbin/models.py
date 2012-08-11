@@ -27,6 +27,7 @@ class Snippet(models.Model):
   user = models.ForeignKey(User,related_name='+',blank=True,null=True,on_delete=models.SET_NULL)
   public_comments = models.BooleanField("allow anyone to comment",default = True,help_text='If true, anyone can comment. Otherwise only the owner (if available), admin or the person with an access token can comment.' )
   visible_to_public = models.BooleanField("allow anyone to view",default = True,help_text='If false, the snippet will only be visible to the owner (if available) or anyone with the access token')
+  owner_only_comments = models.BooleanField("only the owner can comment",default = False,help_text='If true only the owner can comment. Note that the user must be known, otherwise no comments will be allowed')
   access_token = models.CharField(max_length=100,blank=True,default=None,help_text='The "master key" to the snippet. Its knowledge allows commenting, deleting and viewing the snippet.')
   language = models.CharField(max_length=4,choices = LANGUAGE_CHOICES,default=PYTHON)
   
