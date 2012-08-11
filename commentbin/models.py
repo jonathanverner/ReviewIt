@@ -74,6 +74,14 @@ class Comment(models.Model):
   def __unicode__(self):
     return self.text
   
+  def display_author(self):
+    if self.user:
+      return self.user.username
+    elif self.nick:
+      return self.nick
+    else:
+      return "anonymous"
+  
   @models.permalink
   def get_absolute_url(self):
     return ('commentbin.views.comment',(str(self.snippet.id),str(self.id)))
