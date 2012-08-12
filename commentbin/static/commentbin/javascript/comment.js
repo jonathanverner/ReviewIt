@@ -304,7 +304,7 @@ function commentInit() {
   cssClassApplierModule = rangy.modules.CssClassApplier;
   hilightSerializedComments( initialServerComments );
   $(document).bind('keyup','alt+ctrl+m',showCommentForm);
-  setInterval(retrieveNewComments,10000);
+  // setInterval(retrieveNewComments,10000);
   
   $('.mytooltip').tooltip();
   
