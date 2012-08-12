@@ -7,7 +7,7 @@ from django.core import serializers
 from django.core.urlresolvers import reverse as reverseurl
 import django.contrib.auth as djangoauth
 
-import simplejson as json
+import json
 
 from common.http import HttpNotImplemented,HttpPermissionDenied,HttpJSONResponse
 import common.utils as utils
