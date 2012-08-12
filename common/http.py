@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 
 class HttpJSONResponse(HttpResponse):
   def __init__(self, data, add_timestamp = True):
-    import simplejson as json
+    import json
     import common.utils as utils
     if add_timestamp:
       utils.add_timestamp(data)
