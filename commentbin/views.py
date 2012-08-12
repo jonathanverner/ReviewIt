@@ -19,7 +19,7 @@ class NewSnippetForm(forms.ModelForm):
   class Meta:
     model = Snippet
     
-  initial = { 'nick':'anonymous', 'title':'Enter a title...', }
+  initial = { 'nick':'anonymous', 'title':'Enter a title...', 'language':'py' }
   nick = forms.CharField(widget = forms.TextInput(attrs={'size':10, 'class':'nick_related', 'onClick':'javascript:textInputClick(this);', 'onBlur':'javascript:textInputLeave(this);'}))
   title = forms.CharField(widget = forms.TextInput(attrs={'onClick':'this.value=""'}))
       
@@ -55,7 +55,7 @@ def index(request):
 	  append_token='?access_token='+snip.access_token;
 	request.session['snippet_access_token'] = snip.access_token;
       if snip.title == 'Enter a title...':
-	snip.title = None
+	snip.title = ""
       snip.save()
       
       return HttpResponseRedirect(reverseurl('commentbin.views.snippet',args=[snip.id])+append_token)
