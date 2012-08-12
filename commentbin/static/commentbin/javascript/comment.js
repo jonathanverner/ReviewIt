@@ -310,6 +310,7 @@ function commentInit() {
   
   // Add collapse control to the code block
   var td = document.createElement('td');
+  $('table.highlighttable')[0].style.width='100%'
   $('.highlighttable').find('tr')[0].appendChild(td);
   collapsible( $('div.code')[0], $('.othercomments')[0], td, '50%');
 }
