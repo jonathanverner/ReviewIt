@@ -27,8 +27,11 @@ def allow(request,instance,action):
       # we cannot add comments
       if action =='add_comment' and instance.owner_only_comments:
 	return False
-	
-      if 'snippet_access_token' in request.session and instance.access_token == request.session['snippet_access_token']:
+      print request.GET
+      print request.POST
+      if ('snippet_access_token' in request.session and instance.access_token == request.session['snippet_access_token']) or (
+          'snippet_access_token' in request.GET and instance.access_token == request.GET['snippet_access_token']) or (
+          'snippet_access_token' in request.POST and instance.access_token == request.POST['snippet_access_token']):
 	return True
     
       # Snippets may be viewed if they are public or if the
@@ -40,6 +43,9 @@ def allow(request,instance,action):
 	return instance.public_comments
       
       elif action == 'delete':
+	return False
+      
+      elif action == 'view_access_token':
 	return False
     
     elif isinstance(instance,Comment):

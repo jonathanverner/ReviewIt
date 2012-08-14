@@ -119,6 +119,7 @@ function postOtherComment() {
     nick:$('#header_nick')[0].value,
     id:lastID--,
     inlinecomment:false,
+    snippet_access_token:snippet_access_token,
   };
   $.ajax({
     url:'comments/',
@@ -139,7 +140,8 @@ function saveComment(comment) {
     end:current_selection.end,
     text:$('#comment_field')[0].value,
     nick:$('#nick_field')[0].value,
-    id:lastID--
+    id:lastID--,
+    snippet_access_token:access_token,
   };
   hilightComment(comment);
   hilightedComments.push(comment);

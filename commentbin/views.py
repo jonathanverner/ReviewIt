@@ -99,10 +99,15 @@ def snippet(request,snippet_id):
     snip.format_code()
   
   if request.method == 'GET':
-    if not auth.allow(request,snip,'view'):
-      raise HttpPermissionDenied
-    params = {'snippet':snip}
+    params = {'snippet':snip,
+              'nick':request.session.get('nick','anonymous') }
     utils.add_timestamp(params)
+    
+    if not auth.allow(request,snip,'view'):
+      if 'access_token' in request.GET:
+	params['wrong_password']=True
+      return render_to_response('snippet-password.html',params,context_instance=RequestContext(request))
+
     
     try:
       inlinecomments = Comment.objects.filter(snippet = snip,inlinecomment=True)
@@ -116,6 +121,7 @@ def snippet(request,snippet_id):
 
     params['show_delete_link'] = auth.allow(request,snip,'delete')
     params['show_comment_interface'] = auth.allow(request,snip,'add_comment')
+    params['show_access_token'] = auth.allow(request,snip,'view_access_token')
     params['nick'] = request.session.get('nick','anonymous');
     
     return render_to_response('snippet.html',params,context_instance=RequestContext(request))
