@@ -75,6 +75,11 @@ Created by <b>{{ snippet.user.username|default:snippet.nick }}</b> on {{ snippet
 {% endautoescape %}
 <small class='author'>
 Posted by <b>{{ comment.display_author }} </b> on {{  comment.creation_date }}
+<div class='reply'>
+<input type='submit' value='Reply!' class='btn reply' onClick='replyToComment(this);' reply_to='{{comment.id}}'/>
+<textarea id='reply_comment_field_{{ comment.id }}' onClick='activateReplyForm(this)' class='reply'>
+</textarea>
+</div>
 </small>
 </blockquote>
 

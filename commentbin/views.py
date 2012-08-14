@@ -72,6 +72,22 @@ def index(request):
 
 
 exportCommentFields = ("text","start","end", "user", "nick", "inlinecomment","creation_date")
+
+
+def threadComments( c, comments ):
+  replies = []
+  for com in comments:
+    if com.replyto == c:
+      replies.append( threadComments( com, comments ) )
+  return { 'comment':c,'replies':replies }
+
+def thread( comments ):
+  ret = []
+  for c in comments:
+    if c.replyto is None:
+      ret.append(threadComments(c,comments))
+  return ret
+  
                               
 def snippet(request,snippet_id):
   try:
@@ -94,6 +110,7 @@ def snippet(request,snippet_id):
       params['comments'] = serializers.serialize("json",inlinecomments,ensure_ascii=False,fields=exportCommentFields);
       params['json-othercomments'] = serializers.serialize("json",othercomments,ensure_ascii=False,fields=exportCommentFields);
       params['othercomments'] = othercomments;
+      params['threadedcomments'] = thread(othercomments)
     except Comment.DoesNotExist:
       pass
 

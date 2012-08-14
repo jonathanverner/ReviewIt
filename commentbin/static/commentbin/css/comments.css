@@ -76,3 +76,12 @@ div.code {
 .snippet_title {
   margin:10px;
 }
+
+textarea.reply {
+  height:1.5em;
+  margin-top:3px;
+  width:85%;
+}
+input.reply {
+  float:right;
+}
