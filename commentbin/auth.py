@@ -24,8 +24,8 @@ def allow(request,instance,action):
     
     if isinstance(instance,Snippet):
       # Since we do not own the object and it has 'owner_only_comments' set to True
-      # we cannot add comments
-      if action =='add_comment' and instance.owner_only_comments:
+      # we cannot add comments or delete the snippet
+      if (action =='add_comment' or action == 'delete') and instance.owner_only_comments:
 	return False
       print request.GET
       print request.POST
