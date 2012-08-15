@@ -141,7 +141,7 @@ function saveComment(comment) {
     text:$('#comment_field')[0].value,
     nick:$('#nick_field')[0].value,
     id:lastID--,
-    snippet_access_token:access_token,
+    snippet_access_token:snippet_access_token,
   };
   hilightComment(comment);
   hilightedComments.push(comment);

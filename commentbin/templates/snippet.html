@@ -30,8 +30,11 @@
   lastRetrieved = "{{ timestamp }}";
 
 {% if show_access_token %}
-  snippet_access_token = "{{ snippet.access_token }}";
-{% endif %}  
+  snippet_access_token = "{{ snippet.access_token }}"
+{% else %}
+  snippet_access_token = ''
+{% endif %}
+
 
   
   {% endautoescape %}
