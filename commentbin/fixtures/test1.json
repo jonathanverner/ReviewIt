@@ -1,0 +1,35 @@
+[
+  {
+    "pk": 1,
+    "model": "commentbin.snippet",
+    "fields": {
+      "code": "from hashlib import sha512\r\n\r\nprint sha512(\"ahoj\").hexdigest()\r\n\r\n",
+      "language": "py",
+      "title": "Test Snippet",
+      "access_token": "",
+      "formatted_html": "<table class=\"highlighttable\"><tr><td class=\"linenos\"><div class=\"linenodiv\"><pre>1\n2\n3</pre></div></td><td class=\"code\"><div class=\"highlight\"><pre><span class=\"kn\">from</span> <span class=\"nn\">hashlib</span> <span class=\"kn\">import</span> <span class=\"n\">sha512</span>\n\n<span class=\"k\">print</span> <span class=\"n\">sha512</span><span class=\"p\">(</span><span class=\"s\">&quot;ahoj&quot;</span><span class=\"p\">)</span><span class=\"o\">.</span><span class=\"n\">hexdigest</span><span class=\"p\">()</span>\n</pre></div>\n</td></tr></table>",
+      "visible_to_public": false,
+      "creation_date": "2012-07-28 15:00:25",
+      "nick": "",
+      "user": 1,
+      "owner_only_comments": false,
+      "public_comments": false
+    }
+  },
+  {
+    "pk": 4,
+    "model": "commentbin.comment",
+    "fields": {
+      "access_token": "",
+      "end": 492,
+      "start": 483,
+      "replyto": null,
+      "text": ":-D No way...",
+      "creation_date": "2012-08-06 18:44:26",
+      "snippet": 12,
+      "nick": "",
+      "user": null,
+      "inlinecomment": false
+    }
+  }
+]
