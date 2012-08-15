@@ -56,7 +56,7 @@ class Snippet(models.Model):
   def save(self,*args, **kwargs):
     if self.formatted_html is None:
       self.format_code()
-    super(Snippet,self).save(args,kwargs)
+    super(Snippet,self).save(kwargs)
 
 
 class Comment(models.Model):
