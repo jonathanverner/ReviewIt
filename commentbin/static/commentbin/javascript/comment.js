@@ -74,6 +74,7 @@ function deserializeComment( jsonSerializedComment ) {
     end:jsonSerializedComment.fields.end,
     nick:jsonSerializedComment.fields.nick,
     user:jsonSerializedComment.fields.user,
+    date:jsonSerializedComment.fields.creation_date,
   };
   return(comment)
 }
@@ -107,10 +108,51 @@ function hilightSerializedComments( arrayOfComments ) {
 
 function getOtherCommentTag(comment) { 
   var block_quote = document.createElement('blockquote');
-  block_quote.innerHTML=comment.text+'<small>Posted by '+comment.nick+' on '+comment.date+'</small>';
+  block_quote.innerHTML=comment.text+'<small>Posted by '+comment.nick+' on '+comment.date+"<span style='float:right'><img onClick='activateReplyForm(this)' replyto='"+comment.id+"' src='"+static_url+"commentbin/images/reply_64.png' title='Reply ...' class='icon mytooltip clickable'/></span>"+
+  "<div class='reply' id='replyto_"+comment.id+"' style='display:none;'>"+
+  "<input type='submit' value='Reply!' class='btn reply' onClick='replyToComment(this);' replyto='"+comment.id+"'/>"+
+  "<textarea id='reply_comment_field_"+comment.id+"' onClick='activateReplyForm(this)' onBlur='deactivateReplyForm(this)' replyto='"+comment.id+"' class='reply'>"+
+  "</textarea>"
+  "</div></small>"
   return block_quote;
 }
 
+function activateReplyForm( element ) {
+  var replyto = $(element).attr('replyto');
+  $("#replyto_"+replyto)[0].style.display='block';
+}
+
+function deactivateReplyForm( element ) {
+  var replyto = $(element).attr('replyto')
+  $("#replyto_"+replyto)[0].style.display='none';
+}
+
+function replyToComment( element ) {
+  var reply_to = $(element).attr('replyto');
+  var comment = {
+    start:0,
+    end:0,
+    text:$('#reply_comment_field_'+reply_to)[0].value,
+    nick:$('#header_nick')[0].value,
+    id:lastID--,
+    inlinecomment:false,
+    snippet_access_token:snippet_access_token,
+  };
+  
+  $.ajax({
+    url:'comments/'+reply_to+'/',
+    data:comment,
+    type:'POST',
+    success: function(data) {
+      cmnt = deserializeComment(eval(data.comment)[0]);
+      com = getOtherCommentTag( cmnt );
+      $('#replyto_'+reply_to)[0].parentNode.appendChild(com);
+      $('#reply_comment_field_'+reply_to)[0].value='';
+      deactivateReplyForm($('#reply_comment_field_'+reply_to)[0]);
+    },
+    error: error
+  });
+}
 function postOtherComment() { 
   var comment = {
     start:0,
@@ -119,6 +161,7 @@ function postOtherComment() {
     nick:$('#header_nick')[0].value,
     id:lastID--,
     inlinecomment:false,
+    snippet_access_token:snippet_access_token,
   };
   $.ajax({
     url:'comments/',
@@ -139,7 +182,8 @@ function saveComment(comment) {
     end:current_selection.end,
     text:$('#comment_field')[0].value,
     nick:$('#nick_field')[0].value,
-    id:lastID--
+    id:lastID--,
+    snippet_access_token:snippet_access_token,
   };
   hilightComment(comment);
   hilightedComments.push(comment);
@@ -298,6 +342,7 @@ function hideCommentForm() {
   $('#add_comment_form').modal('hide');
   $('#comment_field')[0].value='';
 }
+
 
 function commentInit() { 
   rangy.init();

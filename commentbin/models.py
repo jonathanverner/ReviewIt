@@ -7,6 +7,9 @@ class Snippet(models.Model):
   CPP='cpp'
   C='c'
   HTML='html'
+  JAVASCRIPT='js'
+  PHP = 'php'
+  CSS = 'css'
   
   LANGUAGE_CHOICES = (
     ( PYTHON, 'Python' ),
@@ -14,6 +17,9 @@ class Snippet(models.Model):
     ( CPP,    'C++' ),
     ( C,      'C'),
     ( HTML,   'HTML'),
+    ( JAVASCRIPT, 'JavaScript'),
+    ( PHP,    'PHP'),
+    ( CSS,    'CSS (Cascading Style Sheets)'),
   )
   
   class Meta:
@@ -27,16 +33,33 @@ class Snippet(models.Model):
   user = models.ForeignKey(User,related_name='+',blank=True,null=True,on_delete=models.SET_NULL)
   public_comments = models.BooleanField("allow anyone to comment",default = True,help_text='If true, anyone can comment. Otherwise only the owner (if available), admin or the person with an access token can comment.' )
   visible_to_public = models.BooleanField("allow anyone to view",default = True,help_text='If false, the snippet will only be visible to the owner (if available) or anyone with the access token')
-  owner_only_comments = models.BooleanField("only the owner can comment",default = False,help_text='If true only the owner can comment. Note that the user must be known, otherwise no comments will be allowed')
+  owner_only_comments = models.BooleanField("only the owner can comment/delete",default = False,help_text='If true only the owner can comment. Note that the user must be known, otherwise no comments will be allowed')
   access_token = models.CharField(max_length=100,blank=True,default=None,help_text='The "master key" to the snippet. Its knowledge allows commenting, deleting and viewing the snippet.')
   language = models.CharField(max_length=4,choices = LANGUAGE_CHOICES,default=PYTHON)
   
   def format_code(self):
     from pygments import highlight
-    from pygments.lexers import PythonLexer
+    from pygments.lexers import PythonLexer, HtmlLexer, JavascriptLexer, PhpLexer, TexLexer, CppLexer, CLexer, CssLexer
     from pygments.formatters import HtmlFormatter
     
-    self.formatted_html = highlight( self.code, PythonLexer(), HtmlFormatter(linenos=True) )
+    if self.language == self.PYTHON:
+      lexer = PythonLexer()
+    elif self.language == self.LATEX:
+      lexer = TexLexer()
+    elif self.language == self.CPP:
+      lexer = CppLexer()
+    elif self.language == self.C:
+      lexer = CLexer()
+    elif self.language == self.HTML:
+      lexer = HtmlLexer()
+    elif self.language == self.JAVASCRIPT:
+      lexer = JavascriptLexer()
+    elif self.language == self.PHP:
+      lexer = PhpLexer()      
+    elif self.language == self.CSS:
+      lexer = CssLexer()
+    
+    self.formatted_html = highlight( self.code, lexer, HtmlFormatter(linenos=True) )
   
   def display_author(self):
     if self.user is not None:
@@ -56,7 +79,7 @@ class Snippet(models.Model):
   def save(self,*args, **kwargs):
     if self.formatted_html is None:
       self.format_code()
-    super(Snippet,self).save(args,kwargs)
+    super(Snippet,self).save(kwargs)
 
 
 class Comment(models.Model):
@@ -90,3 +113,4 @@ class Comment(models.Model):
   
   
 # Create your models here.
+

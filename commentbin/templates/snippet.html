@@ -28,6 +28,14 @@
 
   initialServerComments = {{ comments }};  
   lastRetrieved = "{{ timestamp }}";
+
+{% if show_access_token %}
+  snippet_access_token = "{{ snippet.access_token }}"
+{% else %}
+  snippet_access_token = ''
+{% endif %}
+
+
   
   {% endautoescape %}
 {% endblock globalVars %}
@@ -37,7 +45,7 @@
   {{ block.super }}
   
   commentInit();
-  
+   
 {% endblock onReady %}
 
 
@@ -50,39 +58,56 @@
 <div id='error'>
 </div>
 
+
 <h1 class='snippet_title'>{{ snippet.title|default:"Snippet" }} (#{{ snippet.id }})</h1>
 Created by <b>{{ snippet.user.username|default:snippet.nick }}</b> on {{ snippet.creation_date }}.
+
 <div class='comment_controls'>
 {% if show_comment_interface %}
+
 <img rel='tooltip' onClick='showCommentForm()' class='icon mytooltip clickable' title='Add inline comment to the selected section of the code' src='{{ STATIC_URL }}commentbin/images/comment.png' alt='Add a comment'/>
 {% endif %}
 {% if show_delete_link %}
 <img rel='tooltip' onClick='deleteSnippet()' class='icon mytooltip clickable' title='Delete this snippet' src='{{ STATIC_URL }}commentbin/images/delete.png' alt='Delete Snippet'/>
 {% endif %}
+{% if show_access_token %}
+<img src='{{ STATIC_URL }}commentbin/images/key_48.png' class='icon mytooltip' title='Password: {{ snippet.access_token }}'/>
+{% endif %}
+<span>&nbsp;</span>
 </div>
 
 
 <div class='content'>
 
 <div class='othercomments'>
-{% if othercomments %}
 <div id='othercommentslist'>
-{% for comment in othercomments %}
+{% if threadedcomments %}
 
+{% for comment in threadedcomments %}
+
+{% if comment == 'indent' %}
 <blockquote>
+{% endif %}{% if comment == 'deindent' %}
+</blockquote>
+{% endif %}{% if comment != 'indent' and comment != 'deindent' %}
 {% autoescape off %}
 {{ comment.text }}
 {% endautoescape %}
 <small class='author'>
-Posted by <b>{{ comment.display_author }} </b> on {{  comment.creation_date }}
+Posted by <b>{{ comment.display_author }} </b> on {{  comment.creation_date }} <span style='float:right'><img onClick='activateReplyForm(this)' replyto='{{comment.id}}'src='{{ STATIC_URL }}commentbin/images/reply_64.png' title='Reply ...' class='icon mytooltip clickable'/></span>
+<div class='reply' id='replyto_{{comment.id}}' style='display:none;'>
+<input type='submit' value='Reply!' class='btn reply' onClick='replyToComment(this);' replyto='{{comment.id}}'/>
+<textarea id='reply_comment_field_{{ comment.id }}' replyto='{{comment.id}}' onBlur='deactivateReplyForm(this)' class='reply'>
+</textarea>
+</div>
 </small>
-</blockquote>
+
+{% endif %}
 
 {% endfor %}
-</div>
-
 {{ main_comment.text }}
 {% endif %}
+</div>
 
 {% if show_comment_interface %}
 <textarea id='other_comment_text_field'>

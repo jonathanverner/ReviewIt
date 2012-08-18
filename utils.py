@@ -3,5 +3,4 @@ def load_settings( host, settings, g ):
     return
   for (key,value) in settings[host].items():
     g[key]=value
-    print key, value
   return

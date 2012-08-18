@@ -37,11 +37,14 @@
   </div>
 
   <div style='float:right'>
+    {{ form.language }}
+  <div style='display:none'>
   {% if user.is_authenticated %}
     {{ user.username }}
   {% else %}
     {{ form.nick }}
   {% endif %}
+  </div>
   </div>
   <div style='clear:both;'></div>
 </div>
