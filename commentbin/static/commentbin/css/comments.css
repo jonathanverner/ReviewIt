@@ -78,9 +78,9 @@ div.code {
 }
 
 textarea.reply {
-  height:1.5em;
+  height:100px;
   margin-top:3px;
-  width:85%;
+  width:80%;
 }
 input.reply {
   float:right;

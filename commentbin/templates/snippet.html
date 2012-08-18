@@ -80,23 +80,28 @@ Created by <b>{{ snippet.user.username|default:snippet.nick }}</b> on {{ snippet
 <div class='content'>
 
 <div class='othercomments'>
-{% if othercomments %}
+{% if threadedcomments %}
 <div id='othercommentslist'>
-{% for comment in othercomments %}
+{% for comment in threadedcomments %}
 
+{% if comment == 'indent' %}
 <blockquote>
+{% endif %}{% if comment == 'deindent' %}
+</blockquote>
+{% endif %}{% if comment != 'indent' and comment != 'deindent' %}
 {% autoescape off %}
 {{ comment.text }}
 {% endautoescape %}
 <small class='author'>
-Posted by <b>{{ comment.display_author }} </b> on {{  comment.creation_date }}
-<div class='reply'>
-<input type='submit' value='Reply!' class='btn reply' onClick='replyToComment(this);' reply_to='{{comment.id}}'/>
-<textarea id='reply_comment_field_{{ comment.id }}' onClick='activateReplyForm(this)' class='reply'>
+Posted by <b>{{ comment.display_author }} </b> on {{  comment.creation_date }} <span style='float:right'><img onClick='activateReplyForm(this)' replyto='{{comment.id}}'src='{{ STATIC_URL }}commentbin/images/reply_64.png' title='Reply ...' class='icon mytooltip clickable'/></span>
+<div class='reply' id='replyto_{{comment.id}}' style='display:none;'>
+<input type='submit' value='Reply!' class='btn reply' onClick='replyToComment(this);' replyto='{{comment.id}}'/>
+<textarea id='reply_comment_field_{{ comment.id }}' replyto='{{comment.id}}' onBlur='deactivateReplyForm(this)' class='reply'>
 </textarea>
 </div>
 </small>
-</blockquote>
+
+{% endif %}
 
 {% endfor %}
 </div>
