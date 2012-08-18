@@ -37,11 +37,14 @@
   </div>
 
   <div style='float:right'>
+    {{ form.language }}
+  <div style='display:none'>
   {% if user.is_authenticated %}
     {{ user.username }}
   {% else %}
     {{ form.nick }}
   {% endif %}
+  </div>
   </div>
   <div style='clear:both;'></div>
 </div>
@@ -70,7 +73,6 @@
  <div style='display:none'>
  <span class='lower'>{{ form.public_comments }}</span>
  <span class='lower'>{{ form.visible_to_public }}</span>
- <input type='hidden' name='language' id='id_language' value='py'/>
  </div>
 </div>
 </form>

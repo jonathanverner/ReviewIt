@@ -80,8 +80,9 @@ Created by <b>{{ snippet.user.username|default:snippet.nick }}</b> on {{ snippet
 <div class='content'>
 
 <div class='othercomments'>
-{% if threadedcomments %}
 <div id='othercommentslist'>
+{% if threadedcomments %}
+
 {% for comment in threadedcomments %}
 
 {% if comment == 'indent' %}
@@ -104,10 +105,9 @@ Posted by <b>{{ comment.display_author }} </b> on {{  comment.creation_date }} <
 {% endif %}
 
 {% endfor %}
-</div>
-
 {{ main_comment.text }}
 {% endif %}
+</div>
 
 {% if show_comment_interface %}
 <textarea id='other_comment_text_field'>

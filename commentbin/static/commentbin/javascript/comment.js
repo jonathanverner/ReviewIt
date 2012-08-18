@@ -111,7 +111,7 @@ function getOtherCommentTag(comment) {
   block_quote.innerHTML=comment.text+'<small>Posted by '+comment.nick+' on '+comment.date+"<span style='float:right'><img onClick='activateReplyForm(this)' replyto='"+comment.id+"' src='"+static_url+"commentbin/images/reply_64.png' title='Reply ...' class='icon mytooltip clickable'/></span>"+
   "<div class='reply' id='replyto_"+comment.id+"' style='display:none;'>"+
   "<input type='submit' value='Reply!' class='btn reply' onClick='replyToComment(this);' replyto='"+comment.id+"'/>"+
-  "<textarea id='reply_comment_field_"+comment.id+"' onClick='activateReplyForm(this)' onBlur='deactivateReplyForm(this)' class='reply'>"+
+  "<textarea id='reply_comment_field_"+comment.id+"' onClick='activateReplyForm(this)' onBlur='deactivateReplyForm(this)' replyto='"+comment.id+"' class='reply'>"+
   "</textarea>"
   "</div></small>"
   return block_quote;
@@ -123,7 +123,7 @@ function activateReplyForm( element ) {
 }
 
 function deactivateReplyForm( element ) {
-  var replyto = $(this).attr('replyto')
+  var replyto = $(element).attr('replyto')
   $("#replyto_"+replyto)[0].style.display='none';
 }
 
@@ -343,11 +343,12 @@ function hideCommentForm() {
   $('#comment_field')[0].value='';
 }
 
+
 function commentInit() { 
   rangy.init();
   cssClassApplierModule = rangy.modules.CssClassApplier;
   hilightSerializedComments( initialServerComments );
-  $(document).bind('keyup','alt+ctrl+m',showCommentForm);
+  $(document).bind('keyup','alt+ctrl+m',showCommentForm)
   // setInterval(retrieveNewComments,10000);
   
   $('.mytooltip').tooltip();
