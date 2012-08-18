@@ -1,0 +1,35 @@
+
+.errorpage h1 {
+  font-size:42pt;
+  font-weight:bold;
+  color:gray;
+  position:absolute;
+  top:30%;
+  left:20%;
+}
+
+.errorpage a {
+  font-size:200pt;
+  font-weight:bold;
+  color:#ffb380;
+  position:absolute;
+  top:60%;
+  left:50%;
+}
+
+.errorpage a:hover {
+  text-decoration:none;
+}
+
+.errorpage {
+  font-family: sans-serif;
+  color:gray;
+  font-size:13pt;
+}
+
+.message {
+  position:absolute;
+  top:40%;
+  left:22%;
+  width:200px;
+}

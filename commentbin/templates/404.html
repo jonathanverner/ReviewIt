@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 {% block css %}
     {{ block.super }}
-    <link rel="stylesheet" href="{{ STATIC_URL }}commentbin/css/about.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}commentbin/css/error.css" />
 {% endblock css %}
 {% block title %} Error 404: Requested page does not exist {% endblock %}
 
 
 {% block content %}
-<div class='coming-soon'> Error 404 </div>
-<div class='float:right;margin-right:50%;font-size:15pt;'>The requested page does not exist </div>
+<div class='errorpage'>
+<h1> Nothing here ... </h1>
+<h2><a href='http://en.wikipedia.org/wiki/HTTP_404'>404</a></h2>
+<div class='message'>
+We cannot find anything at the url you typed. This may be due to various reasons.
+</div>
+</div>
 {% endblock content %}
 
