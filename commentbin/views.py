@@ -154,7 +154,7 @@ def commentFromRequest( request, snip ):
     comment = Comment.objects.create( text = unicode(request.POST["text"]),
                                       start = int(request.POST["start"]),
                                       end = int(request.POST["end"]),
-                                      nick = utils.getNick( request ),
+                                      nick = utils.getNick( request ) or "",
                                       user = u,
                                       snippet = snip,
                                       access_token = request.session['comment_access_token']);
