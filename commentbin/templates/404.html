@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{{ STATIC_URL }}commentbin/css/about.css" />
+{% endblock css %}
+{% block title %} Error 404: Requested page does not exist {% endblock %}
+
+
+{% block content %}
+<div class='coming-soon'> Error 404 </div>
+<div class='float:right;margin-right:50%;font-size:15pt;'>The requested page does not exist </div>
+{% endblock content %}
+
