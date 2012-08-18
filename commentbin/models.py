@@ -7,6 +7,9 @@ class Snippet(models.Model):
   CPP='cpp'
   C='c'
   HTML='html'
+  JAVASCRIPT='js'
+  PHP = 'php'
+  CSS = 'css'
   
   LANGUAGE_CHOICES = (
     ( PYTHON, 'Python' ),
@@ -14,6 +17,9 @@ class Snippet(models.Model):
     ( CPP,    'C++' ),
     ( C,      'C'),
     ( HTML,   'HTML'),
+    ( JAVASCRIPT, 'JavaScript'),
+    ( PHP,    'PHP'),
+    ( CSS,    'CSS (Cascading Style Sheets)'),
   )
   
   class Meta:
@@ -33,10 +39,27 @@ class Snippet(models.Model):
   
   def format_code(self):
     from pygments import highlight
-    from pygments.lexers import PythonLexer
+    from pygments.lexers import PythonLexer, HtmlLexer, JavascriptLexer, PhpLexer, TexLexer, CppLexer, CLexer, CssLexer
     from pygments.formatters import HtmlFormatter
     
-    self.formatted_html = highlight( self.code, PythonLexer(), HtmlFormatter(linenos=True) )
+    if self.language == self.PYTHON:
+      lexer = PythonLexer()
+    elif self.language == self.LATEX:
+      lexer = TexLexer()
+    elif self.language == self.CPP:
+      lexer = CppLexer()
+    elif self.language == self.C:
+      lexer = CLexer()
+    elif self.language == self.HTML:
+      lexer = HtmlLexer()
+    elif self.language == self.JAVASCRIPT:
+      lexer = JavascriptLexer()
+    elif self.language == self.PHP:
+      lexer = PhpLexer()      
+    elif self.language == self.CSS:
+      lexer = CssLexer()
+    
+    self.formatted_html = highlight( self.code, lexer, HtmlFormatter(linenos=True) )
   
   def display_author(self):
     if self.user is not None:
@@ -90,3 +113,4 @@ class Comment(models.Model):
   
   
 # Create your models here.
+
