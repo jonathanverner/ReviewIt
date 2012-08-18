@@ -8,10 +8,65 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 from django.test.client import RequestFactory,Client
 from django.contrib.auth.models import User
+import json
 
 from models import Snippet, Comment
 import auth
 
+class CommentThreadTest(TestCase):
+  fixtures = ['test1.json']
+  text='Text'
+  
+  def setUp(self):
+    self.factory = RequestFactory()
+    
+  def test_thread(self):
+    other_comments = Comment.objects.filter(snippet = 1,inlinecomment=False)
+    from views import thread, flatten_thread
+    c = thread(other_comments)
+    f = flatten_thread(c)
+    print f
+  
+  def test_post_other_comments(self):
+    response = self.client.post('/commentbin/1/comments/',{'start':0,
+				       'end':0,
+				       'text':self.text,
+				       'id':-10,
+				       'inlinecomment':False,
+				       'snippet_access_token':'mytoken'})
+    self.assertEqual(response.status_code,200)
+    data = json.loads(response.content)
+    comment_data = json.loads(data['comment'])[0]
+    self.assertEqual(comment_data['fields']['text'],self.text)
+    self.assertEqual(data['clientid'],-10)
+    comment = Comment.objects.get(pk = comment_data['pk'])
+    self.assertEqual(comment.text,self.text)
+  
+  def test_post_reply(self):
+    response = self.client.post('/commentbin/1/comments/2/',{'start':0,
+				       'end':0,
+				       'text':self.text,
+				       'id':-10,
+				       'inlinecomment':False,
+				       'snippet_access_token':'mytoken',
+				        })
+    self.assertEqual(response.status_code,200)
+    data = json.loads(response.content)
+    comment_data = json.loads(data['comment'])[0]
+    self.assertEqual(comment_data['fields']['text'],self.text)
+    self.assertEqual(data['clientid'],-10)
+    comment = Comment.objects.get(pk = comment_data['pk'])
+    self.assertEqual(comment.text,self.text)
+    replyto = Comment.objects.get(pk=2)
+    self.assertEqual(comment.replyto,replyto)
+    
+    #self.assertContains(data,'comment')
+    #self.assertEqual(data['comment'][0]['fields']['text'],self.text)
+    #self.assertEqual(data['clientid'],-10)
+
+
+    
+    
 
 class AuthTest(TestCase):
   def setUp(self):

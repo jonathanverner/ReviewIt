@@ -6,7 +6,7 @@
       "code": "from hashlib import sha512\r\n\r\nprint sha512(\"ahoj\").hexdigest()\r\n\r\n",
       "language": "py",
       "title": "Test Snippet",
-      "access_token": "",
+      "access_token": "mytoken",
       "formatted_html": "<table class=\"highlighttable\"><tr><td class=\"linenos\"><div class=\"linenodiv\"><pre>1\n2\n3</pre></div></td><td class=\"code\"><div class=\"highlight\"><pre><span class=\"kn\">from</span> <span class=\"nn\">hashlib</span> <span class=\"kn\">import</span> <span class=\"n\">sha512</span>\n\n<span class=\"k\">print</span> <span class=\"n\">sha512</span><span class=\"p\">(</span><span class=\"s\">&quot;ahoj&quot;</span><span class=\"p\">)</span><span class=\"o\">.</span><span class=\"n\">hexdigest</span><span class=\"p\">()</span>\n</pre></div>\n</td></tr></table>",
       "visible_to_public": false,
       "creation_date": "2012-07-28 15:00:25",
@@ -17,19 +17,87 @@
     }
   },
   {
-    "pk": 4,
+    "pk": 1,
     "model": "commentbin.comment",
     "fields": {
       "access_token": "",
       "end": 492,
       "start": 483,
       "replyto": null,
-      "text": ":-D No way...",
+      "text": "Comment 1",
       "creation_date": "2012-08-06 18:44:26",
-      "snippet": 12,
+      "snippet": 1,
       "nick": "",
       "user": null,
       "inlinecomment": false
+    }
+  },
+  {
+    "pk": 2,
+    "model": "commentbin.comment",
+    "fields": {
+      "access_token": "",
+      "end": 492,
+      "start": 483,
+      "replyto": 1,
+      "text": "Comment 1.1",
+      "creation_date": "2012-08-06 18:44:26",
+      "snippet": 1,
+      "nick": "",
+      "user": null,
+      "inlinecomment": false
+    }
+  },
+  {
+    "pk": 3,
+    "model": "commentbin.comment",
+    "fields": {
+      "access_token": "",
+      "end": 492,
+      "start": 483,
+      "replyto": null,
+      "text": "Comment 2",
+      "creation_date": "2012-08-06 18:44:26",
+      "snippet": 1,
+      "nick": "",
+      "user": null,
+      "inlinecomment": false
+    }
+  },
+  {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+      "username": "john",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2012-08-03 18:42:15",
+      "groups": [],
+      "user_permissions": [],
+      "password": "sha1$921c0$2a2f20a072d27e19fa4c6594b43f17034629ad60",
+      "email": "jonathan.verner@ff.cuni.cz",
+      "date_joined": "2012-07-28 07:41:53"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.user",
+    "fields": {
+      "username": "sam",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2012-08-03 18:42:15",
+      "groups": [],
+      "user_permissions": [],
+      "password": "sha1$d71a1$22db8656d979de34729c767a9561234f3707866a",
+      "email": "jonathan.verner@ff.cuni.cz",
+      "date_joined": "2012-07-28 07:41:53"
     }
   }
 ]
