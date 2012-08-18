@@ -2,8 +2,11 @@ from models import Snippet,Comment
 
 import string,random
 
+def randomToken():
+  return ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(15))
+  
 def generateNewAccessToken(request):
-  request.session['comment_access_token'] = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(15))
+  request.session['comment_access_token'] = randomToken()
 
 def generateAccessTokenIfNotPresent(request):
   if not 'comment_access_token' in request.session:
@@ -16,15 +19,22 @@ def hasToken( request, instance ):
   if 'access_token' in request.POST and instance.access_token == str(request.POST['access_token']):
     return True
   
+  if 'access_token' in request.session and instance.access_token == str(request.session['access_token']):
+    return True
+  
   if isinstance(instance,Snippet):
     if 'snippet_access_token' in request.GET and instance.access_token == str(request.GET['snippet_access_token']):
       return True
     if 'snippet_access_token' in request.POST and instance.access_token == str(request.POST['snippet_access_token']):
       return True
+    if 'snippet_access_token' in request.session and instance.access_token == str(request.session['snippet_access_token']):
+      return True
   elif isinstance(instance,Comment):
     if 'comment_access_token' in request.GET and instance.access_token == str(request.GET['comment_access_token']):
       return True
     if 'comment_access_token' in request.POST and instance.access_token == str(request.POST['comment_access_token']):
+      return True
+    if 'comment_access_token' in request.session and instance.access_token == str(request.session['comment_access_token']):
       return True
   
   
