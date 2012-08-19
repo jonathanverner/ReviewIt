@@ -2,7 +2,7 @@
 
 import os
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 install_dir = os.path.dirname(__file__)
