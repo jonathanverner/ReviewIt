@@ -64,12 +64,12 @@ STATIC_ROOT = install_dir+'/collected_static'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = 'http://reviewbin.appspot.com/static/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+ADMIN_MEDIA_PREFIX = 'http://reviewbin.appspot.com/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -110,7 +110,7 @@ MIDDLEWARE_CLASSES = (
     'common.http.HttpExceptionsMiddleware',
 )
 
-ROOT_URLCONF = 'dj_intro_cs.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     install_dir+'/templates',
