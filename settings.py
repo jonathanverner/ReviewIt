@@ -1,1 +1,1 @@
-settings-devel.py
+settings-pythonanywhere.py
