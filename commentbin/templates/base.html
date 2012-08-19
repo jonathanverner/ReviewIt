@@ -21,7 +21,7 @@
 <script>
     {% block globalVars %}
     
-    var static_url = {{ STATIC_URL }};
+    var static_url = "{{ STATIC_URL }}";
     
     formElements.push( { id:'header_nick',
                          related:'nick_related' } );
